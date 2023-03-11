@@ -1,0 +1,13 @@
+package com.zyc.datasettagger;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class DataSetTaggerApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
