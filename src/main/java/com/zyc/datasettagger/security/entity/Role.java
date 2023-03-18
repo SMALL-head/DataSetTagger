@@ -1,6 +1,7 @@
 package com.zyc.datasettagger.security.entity;
 
 /**
+ * 后端模型：角色权限
  * @author zyc
  * @version 1.0
  */

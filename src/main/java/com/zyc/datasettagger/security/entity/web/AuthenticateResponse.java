@@ -3,6 +3,7 @@ package com.zyc.datasettagger.security.entity.web;
 import java.io.Serializable;
 
 /**
+ * 前端模型：与登陆认证有关的请求的通用返回值
  * @author zyc
  * @version 1.0
  */

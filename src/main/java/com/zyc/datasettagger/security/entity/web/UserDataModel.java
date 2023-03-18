@@ -3,7 +3,7 @@ package com.zyc.datasettagger.security.entity.web;
 import java.io.Serializable;
 
 /**
- * 返回给前端的用户信息，包含username, password, phone, email
+ * 前端模型：返回给前端的用户信息，包含username, password, phone, email
  *
  * @author zyc
  * @version 1.0

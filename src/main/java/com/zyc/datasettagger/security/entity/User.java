@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * 后端模型：用户
  * @author zyc
  * @version 1.0
  */

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 /**
+ * 请求无权限的handler。没有登录认证的情况不会走这个handler
  * @author zyc
  * @version 1.0
  */

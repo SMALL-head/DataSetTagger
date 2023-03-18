@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 自定义用户认证服务，数据来源为MySQL数据库
  * @author zyc
  * @version 1.0
  */
