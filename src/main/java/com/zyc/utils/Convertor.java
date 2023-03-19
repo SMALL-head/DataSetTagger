@@ -1,7 +1,7 @@
 package com.zyc.utils;
 
-import com.zyc.datasettagger.security.entity.User;
-import com.zyc.datasettagger.security.entity.web.UserDataModel;
+import com.zyc.datasettagger.service.security.entity.User;
+import com.zyc.datasettagger.service.security.entity.web.UserDataModel;
 import org.springframework.beans.BeanUtils;
 
 /**

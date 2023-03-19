@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.security.entity.web;
+package com.zyc.datasettagger.service.security.entity.web;
 
 import java.io.Serializable;
 

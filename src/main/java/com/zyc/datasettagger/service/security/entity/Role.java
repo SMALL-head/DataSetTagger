@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.security.entity;
+package com.zyc.datasettagger.service.security.entity;
 
 /**
  * 后端模型：角色权限

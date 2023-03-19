@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.security.entity;
+package com.zyc.datasettagger.service.security.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -114,5 +114,12 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, username);
+    }
+
+    public User(String password, String username, String phone, String email) {
+        this.password = password;
+        this.username = username;
+        this.phone = phone;
+        this.email = email;
     }
 }
