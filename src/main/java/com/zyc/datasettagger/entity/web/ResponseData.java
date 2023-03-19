@@ -21,6 +21,10 @@ public class ResponseData<T extends Serializable> implements Serializable {
         return new ResponseData<>(ReturnCode.RC999.getCode(), ReturnCode.RC999.getMsg(), null);
     }
 
+    public static <T extends Serializable> ResponseData<T> fail(String error_msg) {
+        return new ResponseData<>(ReturnCode.RC999.getCode(), error_msg, null);
+    }
+
     public static <T extends Serializable> ResponseData<T> generate(ReturnCode rc, T data) {
         return new ResponseData<>(rc.getCode(), rc.getMsg(), data);
     }

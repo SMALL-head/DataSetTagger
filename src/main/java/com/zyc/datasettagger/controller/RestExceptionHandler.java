@@ -15,6 +15,6 @@ public class RestExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseData<String> exception(Exception e) {
-        return ResponseData.fail();
+        return ResponseData.fail(e.getMessage());
     }
 }

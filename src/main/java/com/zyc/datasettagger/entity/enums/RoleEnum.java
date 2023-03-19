@@ -20,4 +20,8 @@ public enum RoleEnum {
     public int getRid() {
         return rid;
     }
+
+    public String getName() {
+        return name;
+    }
 }

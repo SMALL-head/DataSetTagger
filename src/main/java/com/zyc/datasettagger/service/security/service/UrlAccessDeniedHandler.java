@@ -1,15 +1,19 @@
 package com.zyc.datasettagger.service.security.service;
 
-import com.zyc.datasettagger.service.security.entity.web.AuthenticateResponse;
-import com.zyc.utils.JSONResponseUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zyc.datasettagger.entity.constants.Constants;
+import com.zyc.datasettagger.entity.enums.ReturnCode;
+import com.zyc.datasettagger.entity.web.ResponseData;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * 请求无权限的handler。没有登录认证的情况不会走这个handler
@@ -18,9 +22,17 @@ import java.io.IOException;
  */
 @Service
 public class UrlAccessDeniedHandler implements AccessDeniedHandler {
+    ObjectMapper objectMapper;
+
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        AuthenticateResponse resp = new AuthenticateResponse(403,accessDeniedException.getMessage(),null);
-        JSONResponseUtils.response(response, resp);
+        ResponseData<Serializable> resp = ResponseData.generate(ReturnCode.RC403, null);
+        response.setContentType(Constants.JSON_CONTENT_TYPE_UTF8);
+        response.getWriter().println(objectMapper.writeValueAsString(resp));
     }
 }
