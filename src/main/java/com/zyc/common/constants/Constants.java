@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.entity.constants;
+package com.zyc.common.constants;
 
 /**
  * @author zyc

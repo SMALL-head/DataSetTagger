@@ -25,3 +25,8 @@ mybatis:
     mapper-locations: classpath*:/mapper/*.xml
     configuration:
         map-underscore-to-camel-case: true
+
+#自定义分页配置
+pagination:
+    config:
+        limitation: 6

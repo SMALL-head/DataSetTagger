@@ -1,9 +1,9 @@
 package com.zyc.datasettagger.service.security.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zyc.datasettagger.entity.constants.Constants;
-import com.zyc.datasettagger.entity.enums.ReturnCode;
-import com.zyc.datasettagger.entity.web.ResponseData;
+import com.zyc.common.constants.Constants;
+import com.zyc.common.enums.ReturnCode;
+import com.zyc.common.model.ResponseData;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 @Component
-public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
+public class NoAuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     ObjectMapper objectMapper;
 
     @Autowired

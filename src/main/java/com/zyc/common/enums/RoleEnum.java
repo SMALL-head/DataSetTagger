@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.entity.enums;
+package com.zyc.common.enums;
 
 /**
  * @author zyc

@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.entity.enums;
+package com.zyc.common.enums;
 
 /**
  * @author zyc
@@ -9,7 +9,8 @@ public enum ReturnCode {
     RC403(403, "没有权限"),
     RC999(999, "操作失败"),
     USERNAME_OR_PASSWORD_ERROR(2003, "用户名或密码错误！"),
-    NO_AUTHENTICATION(2004, "尚未认证");
+    NO_AUTHENTICATION(2004, "尚未认证"),
+    SESSION_EXPIRE(2005, "会话过期，请重新登录");
     final int code;
     final String msg;
 

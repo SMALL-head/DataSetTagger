@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.entity.enums;
+package com.zyc.common.enums;
 
 /**
  * 运行时出现的异常。这个枚举类主要用于封装BizException的

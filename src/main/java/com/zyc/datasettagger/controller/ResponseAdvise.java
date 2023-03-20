@@ -1,7 +1,7 @@
 package com.zyc.datasettagger.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zyc.datasettagger.entity.web.ResponseData;
+import com.zyc.common.model.ResponseData;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;

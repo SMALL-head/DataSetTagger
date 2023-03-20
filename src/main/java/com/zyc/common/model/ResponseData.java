@@ -1,6 +1,6 @@
-package com.zyc.datasettagger.entity.web;
+package com.zyc.common.model;
 
-import com.zyc.datasettagger.entity.enums.ReturnCode;
+import com.zyc.common.enums.ReturnCode;
 
 import java.io.Serializable;
 

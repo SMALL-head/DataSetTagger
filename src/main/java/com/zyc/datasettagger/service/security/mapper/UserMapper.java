@@ -1,13 +1,11 @@
 package com.zyc.datasettagger.service.security.mapper;
 
-import com.zyc.datasettagger.service.security.entity.Role;
-import com.zyc.datasettagger.service.security.entity.User;
+import com.zyc.common.security.entity.Role;
+import com.zyc.common.security.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DuplicateKeyException;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**

@@ -1,6 +1,6 @@
 package com.zyc.datasettagger.controller;
 
-import com.zyc.datasettagger.entity.web.ResponseData;
+import com.zyc.common.model.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -2,6 +2,15 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyc.datasettagger.service.security.mapper.UserMapper">
+    <resultMap id="userMap" type="com.zyc.common.security.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="enabled" property="enabled"/>
+        <result column="phone" property="phone"/>
+        <result column="locked" property="locked"/>
+        <result column="email" property="email"/>
+    </resultMap>
     <insert id="addUser">
         insert into dataset_tagger.user (
              username,
@@ -17,13 +26,13 @@
         insert into dataset_tagger.user_role(uid, rid)
         values (#{user.id}, #{rid});
     </insert>
-    <select id="getUserRoleByUid" resultType="com.zyc.datasettagger.service.security.entity.Role">
+    <select id="getUserRoleByUid" resultType="com.zyc.common.security.entity.Role">
         select  r.*
         from dataset_tagger.role r, dataset_tagger.user_role ur
         where ur.uid = #{id} and ur.rid = r.id;
     </select>
 
-    <select id="loadUserByUsername" resultType="com.zyc.datasettagger.service.security.entity.User">
-        select * from dataset_tagger.user where username = #{username}
+    <select id="loadUserByUsername" resultMap="userMap">
+        select id, username, password, enabled, locked, phone, email from dataset_tagger.user where username = #{username}
     </select>
 </mapper>

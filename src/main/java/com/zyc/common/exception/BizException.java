@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.entity.exception;
+package com.zyc.common.exception;
 
 /**
  * @author zyc

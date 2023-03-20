@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.service.security.entity;
+package com.zyc.common.security.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -104,6 +104,20 @@ public class User implements UserDetails {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+            "id=" + id +
+            ", password='" + password + '\'' +
+            ", username='" + username + '\'' +
+            ", enabled=" + enabled +
+            ", locked=" + locked +
+            ", roles=" + roles +
+            ", phone='" + phone + '\'' +
+            ", email='" + email + '\'' +
+            '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -114,6 +128,9 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, username);
+    }
+
+    public User() {
     }
 
     public User(String password, String username, String phone, String email) {
