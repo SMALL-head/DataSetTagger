@@ -3,7 +3,7 @@ package com.zyc.datasettagger;
 import com.zyc.common.exception.EnumAcquireException;
 import com.zyc.common.security.entity.User;
 import com.zyc.datasettagger.mapper.DataSetMapper;
-import com.zyc.datasettagger.service.security.mapper.UserMapper;
+import com.zyc.datasettagger.config.security.mapper.UserMapper;
 import com.zyc.utils.Convertor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.service.security.config;
+package com.zyc.datasettagger.config.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

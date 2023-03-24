@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zyc.datasettagger.service.security.mapper.UserMapper">
+<mapper namespace="com.zyc.datasettagger.config.security.mapper.UserMapper">
     <resultMap id="userMap" type="com.zyc.common.security.entity.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
@@ -11,16 +11,10 @@
         <result column="locked" property="locked"/>
         <result column="email" property="email"/>
     </resultMap>
+    <!--该语句会自动生成gmt_create-->
     <insert id="addUser">
-        insert into dataset_tagger.user (
-             username,
-             password,
-             enabled,
-             locked,
-             phone,
-             email
-         )
-        values (#{username}, #{password}, 1, null, #{phone}, #{email});
+        insert into dataset_tagger.user (username, `password`, enabled, `locked`, phone, email, gmt_create)
+        values (#{username}, #{password}, 1, null, #{phone}, #{email}, now());
     </insert>
     <insert id="addTaggerRole">
         insert into dataset_tagger.user_role(uid, rid)

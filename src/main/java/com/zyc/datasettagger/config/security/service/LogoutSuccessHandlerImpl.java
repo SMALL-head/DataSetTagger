@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.service.security.service;
+package com.zyc.datasettagger.config.security.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zyc.common.constants.Constants;

@@ -6,6 +6,7 @@ import com.zyc.common.enums.TagTypeEnum;
 import java.sql.Timestamp;
 
 /**
+ * 程序内部使用的DataSet类
  * @author zyc
  * @version 1.0
  */

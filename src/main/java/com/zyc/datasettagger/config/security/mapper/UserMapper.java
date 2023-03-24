@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.service.security.mapper;
+package com.zyc.datasettagger.config.security.mapper;
 
 import com.zyc.common.security.entity.Role;
 import com.zyc.common.security.entity.User;

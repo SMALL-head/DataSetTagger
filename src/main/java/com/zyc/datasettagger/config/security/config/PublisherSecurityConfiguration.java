@@ -1,10 +1,10 @@
-package com.zyc.datasettagger.service.security.config;
+package com.zyc.datasettagger.config.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zyc.common.constants.Constants;
 import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.security.entity.web.AuthenticateResponse;
-import com.zyc.datasettagger.service.security.mapper.UserMapper;
+import com.zyc.datasettagger.config.security.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
