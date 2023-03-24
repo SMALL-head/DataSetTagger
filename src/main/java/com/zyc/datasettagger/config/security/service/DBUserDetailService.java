@@ -1,8 +1,8 @@
-package com.zyc.datasettagger.security.service;
+package com.zyc.datasettagger.config.security.service;
 
-import com.zyc.datasettagger.security.entity.Role;
-import com.zyc.datasettagger.security.entity.User;
-import com.zyc.datasettagger.security.mapper.UserMapper;
+import com.zyc.common.security.entity.Role;
+import com.zyc.common.security.entity.User;
+import com.zyc.datasettagger.config.security.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;

@@ -1,30 +1,37 @@
 package com.zyc.datasettagger;
 
-import jakarta.annotation.Resource;
+import com.zyc.common.exception.EnumAcquireException;
+import com.zyc.common.security.entity.User;
+import com.zyc.datasettagger.mapper.DataSetMapper;
+import com.zyc.datasettagger.config.security.mapper.UserMapper;
+import com.zyc.utils.Convertor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
+@Slf4j
 class DataSetTaggerApplicationTests {
-    @Resource(name = "bCryptPasswordEncoder")
-    PasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+   UserMapper userMapper;
+
+    @Autowired
+    DataSetMapper dataSetMapper;
 
     @Test
     void contextLoads() {
     }
 
     @Test
-    void passwordEncoderTest() {
-        System.out.println("{bcrypt}" + bCryptPasswordEncoder.encode("123"));
-        System.out.println(bCryptPasswordEncoder.matches("$2a$10$OO7aJ5EtMPKW6ufuVO5ZfONe8JO0LZFLG1uO0r8roiXl5fO8Y9dpS", "$2a$10$nun10wPUnHWsX2W2GyeJTelA2LD86JfV1fjjHVQ0w2BRtZKjUlhjy"));
+    void test() {
+        User p1 = userMapper.loadUserByUsername("p1");
+        System.out.println(p1);
     }
 
     @Test
-    void test() {
-        Integer i = 128;
-        Integer i2 = 128;
-        System.out.println(i2 == i);
+    public void testDataSetMapper() throws EnumAcquireException {
+        log.info(Convertor.DataSetEntity2DataSetInfo(dataSetMapper.selectById(1) )+ "");
     }
 
 }
