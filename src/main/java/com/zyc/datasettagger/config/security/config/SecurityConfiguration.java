@@ -5,7 +5,6 @@ import com.zyc.common.constants.Constants;
 import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.security.entity.web.AuthenticateResponse;
 import com.zyc.datasettagger.config.security.mapper.UserMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,13 +14,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 @Configuration
-@Order(2)
-@Slf4j
-public class PublisherSecurityConfiguration {
+public class SecurityConfiguration {
     UserMapper userMapper;
 
     @Autowired
@@ -30,46 +29,53 @@ public class PublisherSecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain2(HttpSecurity httpSecurity,
+    public SecurityFilterChain filterChain1(HttpSecurity httpSecurity,
                                             UserDetailsService userDetailsService,
                                             AccessDeniedHandler accessDeniedHandler,
                                             AuthenticationEntryPoint authenticationEntryPoint,
+                                            LogoutSuccessHandler logoutSuccessHandler,
                                             SessionInformationExpiredStrategy sessionInformationExpiredStrategy,
-                                            AuthenticationSuccessHandler authenticationSuccessHandler) throws Exception {
-        httpSecurity
-            .securityMatcher("/api/publisher/**")
+                                            AuthenticationSuccessHandler authenticationSuccessHandler,
+                                            AuthenticationFailureHandler authenticationFailureHandler) throws Exception {
+        return httpSecurity
+            .securityMatcher("/api/**")
             .authorizeHttpRequests(registry -> {
                 try {
                     registry
-                        .requestMatchers("/api/publisher/register").permitAll()
-                        .requestMatchers("/api/publisher/**").hasRole("PUBLISHER").
-                        anyRequest().authenticated(); // 所有其他请求一律需要认证
+                        .requestMatchers("/api/user/register").permitAll()
+                        .requestMatchers("/api/user/login").permitAll()
+                        .anyRequest().authenticated(); // 所有其他请求一律需要认证
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             })
             .formLogin()
-            .loginProcessingUrl("/api/publisher/login").permitAll()// 前端action中的url，匹配后将会将登录认证信息传给bean认证
+            .loginProcessingUrl("/api/user/login").permitAll() // 前端action中的url，匹配后将会将登录认证信息传给bean认证
             .usernameParameter("username").passwordParameter("password")// 前端表单指定的值
             .successHandler(authenticationSuccessHandler)
-            .failureHandler(((request, response, exception) -> {
-                AuthenticateResponse authenticateResponse = new AuthenticateResponse(ReturnCode.USERNAME_OR_PASSWORD_ERROR.getCode(), ReturnCode.USERNAME_OR_PASSWORD_ERROR.getMsg(), null);
-                response.setContentType(Constants.JSON_CONTENT_TYPE_UTF8);
-                response.getWriter().println(new ObjectMapper().writeValueAsString(authenticateResponse));
-            })).and()
+            .failureHandler(authenticationFailureHandler)
+            .and()
+            .logout() // 开启注销功能，默认是开启的，这里调用该方法只是为了获取其对象
+            .logoutUrl("/api/user/logout")
+            .permitAll()
+            .invalidateHttpSession(true) // 默认是true，退出登录后推出session
+            .clearAuthentication(true) // 默认是true，清除认证
+            .deleteCookies("JSESSIONID")
+            .logoutSuccessHandler(logoutSuccessHandler) //如果前后端分离可以使用handler
+            .and()
+            .userDetailsService(userDetailsService)
+            .exceptionHandling()
+            .accessDeniedHandler(accessDeniedHandler)
+            .authenticationEntryPoint(authenticationEntryPoint) // 自定义未登录逻辑，这样就不会返回登陆界面了
+            .and()
             .csrf().disable()
             .sessionManagement()
             .maximumSessions(1) // 只允许一个登录，重复登录会挤掉之前的登录
             .expiredSessionStrategy(sessionInformationExpiredStrategy)
-            .maxSessionsPreventsLogin(false); // 如果自定义UserDetails需要重写equals和hashcode
-
-        httpSecurity
-            .userDetailsService(userDetailsService)
-            .exceptionHandling()
-            .accessDeniedHandler(accessDeniedHandler)
-            .authenticationEntryPoint(authenticationEntryPoint);// 自定义未登录逻辑，这样就不会返回登陆界面了
-
-        return httpSecurity.build();
+            .maxSessionsPreventsLogin(false)
+            .and()
+            .and()
+            .build();
     }
 
 //    @Bean

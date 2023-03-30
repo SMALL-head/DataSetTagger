@@ -5,6 +5,7 @@ import com.zyc.common.enums.ReturnCode;
 import java.io.Serializable;
 
 /**
+ * 通用的返回类型模版,其中内置一些生成常见的模版的静态方法可供调用
  * @author zyc
  * @version 1.0
  */

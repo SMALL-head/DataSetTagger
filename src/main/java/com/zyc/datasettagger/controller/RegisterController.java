@@ -28,7 +28,7 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/api/tagger/register", produces = Constants.JSON_CONTENT_TYPE_UTF8)
+    @PostMapping(value = "/api/user/register", produces = Constants.JSON_CONTENT_TYPE_UTF8)
     public UserDataModel taggerRegister(@RequestParam("username") String username,
                                  @RequestParam("password") String password,
                                  String phone,
@@ -39,17 +39,4 @@ public class RegisterController {
         User user = userService.addUser(username, password, phone, email, RoleEnum.TAGGER);
         return Convertor.User2UserDataModel(user);
     }
-
-    @PostMapping(value = "/api/publisher/register", produces = Constants.JSON_CONTENT_TYPE_UTF8)
-    public UserDataModel publisherRegister(@RequestParam("username") String username,
-                                           @RequestParam("password") String password,
-                                           String phone,
-                                           String email) throws BizException {
-        if (ObjectUtils.isEmpty(username) || ObjectUtils.isEmpty(password)) {
-            throw new BizException("账号或密码不能为空");
-        }
-        User user = userService.addUser(username, password, phone, email, RoleEnum.PUBLISHER);
-        return Convertor.User2UserDataModel(user);
-    }
-
 }

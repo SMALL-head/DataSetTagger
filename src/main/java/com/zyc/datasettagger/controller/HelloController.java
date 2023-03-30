@@ -12,20 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HelloController {
-    @RequestMapping("/hello")
+    @RequestMapping(value = "/hello", produces = Constants.JSON_CONTENT_TYPE_UTF8)
     public String hello() {
         return "hello";
     }
 
-    @RequestMapping(value = "/api/tagger/hello", produces = Constants.JSON_CONTENT_TYPE_UTF8)
+    @RequestMapping(value = "/api/user/hello", produces = Constants.JSON_CONTENT_TYPE_UTF8)
     public String taggerHello() {
         return "hello tagger: " + SecurityContextHolder.getContext().getAuthentication().getName();
-    }
-
-    @RequestMapping(value = "/api/publisher/hello", produces = Constants.JSON_CONTENT_TYPE_UTF8)
-    public String publisherHello() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        return "hello publisher: " + name;
     }
 }
