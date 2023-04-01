@@ -1,6 +1,7 @@
 package com.zyc.datasettagger.controller;
 
 import com.zyc.common.constants.Constants;
+import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.enums.RoleEnum;
 import com.zyc.common.exception.BizException;
 import com.zyc.datasettagger.service.UserService;
@@ -34,7 +35,7 @@ public class RegisterController {
                                  String phone,
                                  String email) throws BizException {
         if (ObjectUtils.isEmpty(username) || ObjectUtils.isEmpty(password)) {
-            throw new BizException("账号或密码不能为空");
+            throw new BizException("账号或密码不能为空", ReturnCode.INVALID_INPUT);
         }
         User user = userService.addUser(username, password, phone, email, RoleEnum.TAGGER);
         return Convertor.User2UserDataModel(user);

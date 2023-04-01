@@ -1,6 +1,7 @@
 package com.zyc.datasettagger.service.impl;
 
 import com.zyc.common.enums.ErrorEnum;
+import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.enums.RoleEnum;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.security.entity.User;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
         try {
             userMapper.addUser(user);
         } catch (DuplicateKeyException sqlException) {
-            throw new BizException(ErrorEnum.MULTIPLE_USERNAME.getMsg());
+            throw new BizException(ErrorEnum.MULTIPLE_USERNAME.getMsg(), ReturnCode.MULTIPLE_USERNAME);
         }
 
         user = userMapper.loadUserByUsername(username);

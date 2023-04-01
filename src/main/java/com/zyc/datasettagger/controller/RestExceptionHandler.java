@@ -1,5 +1,6 @@
 package com.zyc.datasettagger.controller;
 
+import com.zyc.common.exception.BizException;
 import com.zyc.common.model.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class RestExceptionHandler {
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseData<String> exception(Exception e) {
-        return ResponseData.fail(e.getMessage());
+    public ResponseData<String> exception(BizException e) {
+        return ResponseData.generate(e.getReturnCode(), e.getMessage());
     }
 }

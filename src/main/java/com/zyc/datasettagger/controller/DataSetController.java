@@ -1,6 +1,7 @@
 package com.zyc.datasettagger.controller;
 
 import com.zyc.common.data.DataSetInfo;
+import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.enums.SampleTypeEnum;
 import com.zyc.common.enums.TagTypeEnum;
 import com.zyc.common.exception.BizException;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,9 +45,13 @@ public class DataSetController {
     @PostMapping(value = "/api/dataset", produces = MediaType.APPLICATION_JSON_VALUE)
     public DataSetModel addDataSet(String desc,
                                    @RequestParam("example_type") String sampleType,
-                                   @RequestParam("tag_tpe") String tagType) throws EnumAcquireException, BizException {
+                                   @RequestParam("tag_tpe") String tagType,
+                                   @RequestParam String name) throws EnumAcquireException, BizException {
         // 1. 封装datasetInfo
         DataSetInfo dataSetInfo = new DataSetInfo();
+        if (ObjectUtils.isEmpty(desc) || ObjectUtils.isEmpty(sampleType) || ObjectUtils.isEmpty(tagType)) {
+            throw new BizException("数据集描述或样本类型或标记类型不能为空", ReturnCode.INVALID_INPUT);
+        }
         dataSetInfo.setDesc(desc);
         dataSetInfo.setSampleType(SampleTypeEnum.getEnumByName(sampleType));
         dataSetInfo.setTagType(TagTypeEnum.getEnumByName(tagType));
@@ -56,12 +62,13 @@ public class DataSetController {
         Integer idByUsername = userService.getIdByUsername(username);
         if (idByUsername == null) {
             log.error("[addDataSet]-用户名{}对应的id为空，对前端传参进行检查", username);
-            throw new BizException("用户名{%s}不存在，无法添加对应的数据集");
+            throw new BizException("用户名{%s}不存在，无法添加对应的数据集", ReturnCode.USER_NOT_FOUND);
         }
 
         dataSetInfo.setPublisherId(idByUsername);
         String datasetId = UUID.randomUUID().toString();
         dataSetInfo.setDatasetId(datasetId);
+        dataSetInfo.setName(name);
 
         int i = dataSetService.insertDataSet(dataSetInfo);
 
