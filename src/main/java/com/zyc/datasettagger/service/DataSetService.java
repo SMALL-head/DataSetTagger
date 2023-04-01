@@ -9,4 +9,8 @@ import com.zyc.common.model.ListPage;
  */
 public interface DataSetService {
     ListPage<DataSetInfo> getAllDataSetInfoByLimitation(int page, int limitation);
+
+    int insertDataSet(DataSetInfo dataSetInfo);
+
+    DataSetInfo getDataSetByDataSetId(String dataSetId);
 }

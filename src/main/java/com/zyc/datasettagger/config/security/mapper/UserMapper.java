@@ -22,4 +22,6 @@ public interface UserMapper {
 
     int addTaggerRole(@Param("user") User user, @Param("rid") Integer rid);
 
+    Integer getIdByUsername(String username);
+
 }

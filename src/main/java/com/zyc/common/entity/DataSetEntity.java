@@ -1,8 +1,5 @@
 package com.zyc.common.entity;
 
-import com.zyc.common.enums.SampleTypeEnum;
-import com.zyc.common.enums.TagTypeEnum;
-
 import java.sql.Timestamp;
 
 /**
@@ -12,22 +9,27 @@ import java.sql.Timestamp;
 
 public class DataSetEntity {
     int id;
+
+    String datasetId;
     Timestamp pubTime;
     String desc;
     String tagType;
     String sampleType;
     String name;
 
+    int publisherId;
+
     public DataSetEntity() {
     }
 
-    public DataSetEntity(int id, Timestamp pubTime, String desc, String tagType, String sampleType, String name) {
+    public DataSetEntity(int id, Timestamp pubTime, String desc, String tagType, String sampleType, String name, int publisherId) {
         this.id = id;
         this.pubTime = pubTime;
         this.desc = desc;
         this.tagType = tagType;
         this.sampleType = sampleType;
         this.name = name;
+        this.publisherId = publisherId;
     }
 
     public int getId() {
@@ -76,5 +78,21 @@ public class DataSetEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPublisherId() {
+        return publisherId;
+    }
+
+    public void setPublisherId(int publisherId) {
+        this.publisherId = publisherId;
+    }
+
+    public String getDataset_id() {
+        return datasetId;
+    }
+
+    public void setDataset_id(String datasetId) {
+        this.datasetId = datasetId;
     }
 }

@@ -1,7 +1,6 @@
 # 一、用户登录
-## 1.1 tagger module--标注者模块
-1.1.1 登录
-请求：(POST)/api/tagger/login
+## 1.1 登录
+请求：(POST)/api/user/login
 ```json
 {
   "username": "string",
@@ -23,8 +22,8 @@
   }
 }
 ```
-1.1.2注册
-请求：(POST)/api/tagger/register
+### 1.2 注册
+请求：(POST)/api/user/register
 ```json
 {
   "username": "string",
@@ -43,6 +42,43 @@
     "password": "string",
     "phone": "string",
     "email": "string"
+  }
+}
+```
+## 1.3 注销登录
+请求方式：
+(POST)/api/user/logout
+```json
+{
+  "code": 0,
+  "error_msg": "string",
+  "data": "string"
+}
+
+```
+# 二、数据集模块
+## 2.1 新增数据集
+请求：
+(POST) /api/dataset
+```json
+{
+  "desc": "string",
+  "sample_type": "string",
+  "tag_type": "string"
+}
+```
+响应：
+```json
+{
+  "code": 0,
+  "error_msg": "string",
+  "data": {
+    "_id": "string",
+    "publisher_id": "string",
+    "pub_time": "string",
+    "desc": "string",
+    "sample_type": "string",
+    "tag_type": "string"
   }
 }
 ```

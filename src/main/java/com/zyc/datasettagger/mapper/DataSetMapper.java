@@ -2,6 +2,7 @@ package com.zyc.datasettagger.mapper;
 
 import com.zyc.common.entity.DataSetEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ public interface DataSetMapper {
     List<DataSetEntity> selectAllWithLimitation(Integer page, Integer limitation);
 
     int selectCountAll();
+
+    int insertDataSetEntity(DataSetEntity entity);
+
+    DataSetEntity selectByDatasetId(@Param("dataSetId") String dataSetId);
 
 }

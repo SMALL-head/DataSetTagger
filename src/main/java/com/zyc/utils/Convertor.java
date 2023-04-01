@@ -23,16 +23,4 @@ public class Convertor {
         userDataModel.set_id(user.getId().toString());
         return userDataModel;
     }
-
-    public static DataSetInfo DataSetEntity2DataSetInfo(DataSetEntity entity) {
-        DataSetInfo res = new DataSetInfo();
-        BeanUtils.copyProperties(entity, res);
-        try {
-            res.setSampleType(SampleTypeEnum.getEnumByName(entity.getSampleType()));
-            res.setTagType(TagTypeEnum.getEnumByName(entity.getTagType()));
-        } catch (EnumAcquireException e) {
-            log.warn("[DataSetEntity2DataSetInfo] - {}", e.getMessage());
-        }
-        return res;
-    }
 }

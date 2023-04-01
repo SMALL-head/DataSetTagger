@@ -12,12 +12,16 @@ import java.sql.Timestamp;
  */
 public class DataSetInfo {
     int id;
+
+    String datasetId;
     Timestamp pubTime;
     String desc;
     TagTypeEnum tagType;
     SampleTypeEnum sampleType;
 
     String name;
+
+    int publisherId;
 
     public DataSetInfo() {
     }
@@ -70,14 +74,32 @@ public class DataSetInfo {
         this.name = name;
     }
 
-    public DataSetInfo(int id, Timestamp pubTime, String desc, TagTypeEnum tagType, SampleTypeEnum sampleType, String name) {
+    public DataSetInfo(int id, Timestamp pubTime, String desc, TagTypeEnum tagType, SampleTypeEnum sampleType, String name, int publisherId) {
         this.id = id;
         this.pubTime = pubTime;
         this.desc = desc;
         this.tagType = tagType;
         this.sampleType = sampleType;
         this.name = name;
+        this.publisherId = publisherId;
     }
+
+    public int getPublisherId() {
+        return publisherId;
+    }
+
+    public void setPublisherId(int publisherId) {
+        this.publisherId = publisherId;
+    }
+
+    public void setDatasetId(String datasetId) {
+        this.datasetId = datasetId;
+    }
+
+    public String getDatasetId() {
+        return datasetId;
+    }
+
 
     @Override
     public String toString() {

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * @author zyc
@@ -44,5 +46,19 @@ public class UserServiceImpl implements UserService {
             log.warn("[taggerRegister]-新用户{}权限更新失败", user.getUsername());
         }
         return user;
+    }
+
+    @Override
+    public Integer getIdByUsername(String username) {
+        if (ObjectUtils.isEmpty(username)) {
+            log.warn("[getIdByUsername]-username传参为空");
+            return null;
+        }
+        Integer idByUsername = userMapper.getIdByUsername(username);
+        if (idByUsername == null) {
+            log.warn("[getIdByUsername]-用户名{}不存在，故无法找到对应的id", username);
+            return null;
+        }
+        return idByUsername;
     }
 }

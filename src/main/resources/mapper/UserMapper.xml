@@ -29,4 +29,7 @@
     <select id="loadUserByUsername" resultMap="userMap">
         select id, username, password, enabled, locked, phone, email from dataset_tagger.user where username = #{username}
     </select>
+    <select id="getIdByUsername" resultType="java.lang.Integer">
+        select id from dataset_tagger.user where username = #{username};
+    </select>
 </mapper>

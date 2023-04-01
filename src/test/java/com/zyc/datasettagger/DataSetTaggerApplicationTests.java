@@ -5,6 +5,7 @@ import com.zyc.common.security.entity.User;
 import com.zyc.datasettagger.mapper.DataSetMapper;
 import com.zyc.datasettagger.config.security.mapper.UserMapper;
 import com.zyc.utils.Convertor;
+import com.zyc.utils.convertor.DataSetConvertor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ class DataSetTaggerApplicationTests {
 
     @Test
     public void testDataSetMapper() throws EnumAcquireException {
-        log.info(Convertor.DataSetEntity2DataSetInfo(dataSetMapper.selectById(1) )+ "");
+        log.info(DataSetConvertor.DataSetEntity2DataSetInfo(dataSetMapper.selectById(1) )+ "");
     }
 
 }
