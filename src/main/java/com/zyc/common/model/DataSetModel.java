@@ -17,6 +17,15 @@ public class DataSetModel implements Serializable {
     public DataSetModel() {
     }
 
+    public DataSetModel(String _id, String publisher_id, String pub_time, String desc, String sample_type, String tag_type) {
+        this._id = _id;
+        this.publisher_id = publisher_id;
+        this.pub_time = pub_time;
+        this.desc = desc;
+        this.sample_type = sample_type;
+        this.tag_type = tag_type;
+    }
+
     public String get_id() {
         return _id;
     }

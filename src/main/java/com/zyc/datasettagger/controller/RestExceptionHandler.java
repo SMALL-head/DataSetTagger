@@ -1,7 +1,9 @@
 package com.zyc.datasettagger.controller;
 
+import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.model.ResponseData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @version 1.0
  */
 @RestControllerAdvice
+@Slf4j
 public class RestExceptionHandler {
     @ExceptionHandler(BizException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseData<String> exception(BizException e) {
         return ResponseData.generate(e.getReturnCode(), e.getMessage());
     }

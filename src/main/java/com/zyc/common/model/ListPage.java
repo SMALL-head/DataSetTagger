@@ -2,6 +2,7 @@ package com.zyc.common.model;
 
 import lombok.AllArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,10 +10,22 @@ import java.util.List;
  * @version 1.0
  */
 @AllArgsConstructor
-public class ListPage<T> {
+public class ListPage<T> implements Serializable {
+    /**
+     * 当前页号
+     */
     int curPage;
+    /**
+     * 一共多少页
+     */
     int pageSize;
+    /**
+     * 页内容
+     */
     List<T> pageContent;
+    /**
+     * 每页的大小
+     */
     int limitation;
 
     public int getPageSize() {

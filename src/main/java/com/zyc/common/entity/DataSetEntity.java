@@ -19,6 +19,14 @@ public class DataSetEntity {
 
     int publisherId;
 
+    public String getDatasetId() {
+        return datasetId;
+    }
+
+    public void setDatasetId(String datasetId) {
+        this.datasetId = datasetId;
+    }
+
     public DataSetEntity() {
     }
 
@@ -94,5 +102,14 @@ public class DataSetEntity {
 
     public void setDataset_id(String datasetId) {
         this.datasetId = datasetId;
+    }
+
+    @Override
+    public String toString() {
+        return "DataSetEntity{" +
+            "id=" + id +
+            ", datasetId='" + datasetId + '\'' +
+            ", publisherId=" + publisherId +
+            '}';
     }
 }

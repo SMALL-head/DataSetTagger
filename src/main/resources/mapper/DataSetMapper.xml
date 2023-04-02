@@ -21,7 +21,15 @@
     </select>
 
     <select id="selectAllWithLimitation" resultType="com.zyc.common.entity.DataSetEntity">
-        select dataset_id, publisher_id, `desc`, pub_time, tag_type, sample_type from data_set limit #{page}, #{limitation}
+        select dataset_id, publisher_id, `desc`, pub_time, tag_type, sample_type
+        from data_set
+        <where>
+            <if test="publisherId != null">
+                publisher_id = #{publisherId}
+            </if>
+        </where>
+        limit #{offset}, #{limitation}
+
     </select>
     <select id="selectCountAll" resultType="java.lang.Integer">
         select count(*) from data_set;

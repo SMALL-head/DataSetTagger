@@ -14,7 +14,7 @@ import java.util.List;
 public interface DataSetMapper {
     DataSetEntity selectById(Integer id);
 
-    List<DataSetEntity> selectAllWithLimitation(Integer page, Integer limitation);
+    List<DataSetEntity> selectAllWithLimitation(Integer offset, Integer limitation, Integer publisherId);
 
     int selectCountAll();
 
