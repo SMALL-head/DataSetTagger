@@ -1,11 +1,13 @@
 package com.zyc.datasettagger.controller;
 
 import com.zyc.common.data.DataSetInfo;
+import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.enums.SampleTypeEnum;
 import com.zyc.common.enums.TagTypeEnum;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.exception.EnumAcquireException;
 import com.zyc.common.model.DataSetModel;
+import com.zyc.common.model.ListPage;
 import com.zyc.datasettagger.service.DataSetService;
 import com.zyc.datasettagger.service.UserService;
 import com.zyc.utils.convertor.DataSetConvertor;
@@ -13,11 +15,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @author zyc
@@ -43,9 +49,13 @@ public class DataSetController {
     @PostMapping(value = "/api/dataset", produces = MediaType.APPLICATION_JSON_VALUE)
     public DataSetModel addDataSet(String desc,
                                    @RequestParam("example_type") String sampleType,
-                                   @RequestParam("tag_tpe") String tagType) throws EnumAcquireException, BizException {
+                                   @RequestParam("tag_tpe") String tagType,
+                                   @RequestParam String name) throws EnumAcquireException, BizException {
         // 1. 封装datasetInfo
         DataSetInfo dataSetInfo = new DataSetInfo();
+        if (ObjectUtils.isEmpty(desc) || ObjectUtils.isEmpty(sampleType) || ObjectUtils.isEmpty(tagType)) {
+            throw new BizException("数据集描述或样本类型或标记类型不能为空", ReturnCode.INVALID_INPUT);
+        }
         dataSetInfo.setDesc(desc);
         dataSetInfo.setSampleType(SampleTypeEnum.getEnumByName(sampleType));
         dataSetInfo.setTagType(TagTypeEnum.getEnumByName(tagType));
@@ -56,12 +66,13 @@ public class DataSetController {
         Integer idByUsername = userService.getIdByUsername(username);
         if (idByUsername == null) {
             log.error("[addDataSet]-用户名{}对应的id为空，对前端传参进行检查", username);
-            throw new BizException("用户名{%s}不存在，无法添加对应的数据集");
+            throw new BizException("用户名{%s}不存在，无法添加对应的数据集", ReturnCode.USER_NOT_FOUND);
         }
 
         dataSetInfo.setPublisherId(idByUsername);
         String datasetId = UUID.randomUUID().toString();
         dataSetInfo.setDatasetId(datasetId);
+        dataSetInfo.setName(name);
 
         int i = dataSetService.insertDataSet(dataSetInfo);
 
@@ -71,5 +82,19 @@ public class DataSetController {
             log.warn("[addDataSet]-fail-向数据集添加数据失败, publisher={}", username);
         }
         return DataSetConvertor.DataSetInfo2Model(dataSetService.getDataSetByDataSetId(datasetId));
+    }
+
+    @RequestMapping("/api/dataset")
+    public ListPage<DataSetModel> getAllDataSet(Integer page_num, Integer page_size, Integer publisher_id) throws BizException {
+        if (page_num == null || page_size == null) {
+            log.warn("[getAllDataSet]-非法参数传入 - page_num = {}, page_size={}", page_num, page_size);
+            throw new BizException("必须传入分页信息page_num和page_size", ReturnCode.INVALID_INPUT);
+        }
+
+        // 进行无差别全量查询，查询结果转化为DataSetModel
+        ListPage<DataSetInfo> allDataSet = dataSetService.getAllDataSetInfoByLimitation(page_num, page_size, publisher_id);
+        List<DataSetModel> collect = allDataSet.getPageContent().stream()
+            .map(DataSetConvertor::DataSetInfo2Model).toList();
+        return new ListPage<>(allDataSet.getCurPage(), allDataSet.getPageSize(), collect, allDataSet.getLimitation());
     }
 }

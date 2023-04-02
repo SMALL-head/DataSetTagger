@@ -30,13 +30,16 @@ public class DataSetServiceImpl implements DataSetService {
     }
 
     @Override
-    public ListPage<DataSetInfo> getAllDataSetInfoByLimitation(int page, int limitation) {
-        List<DataSetInfo> res = dataSetMapper.selectAllWithLimitation(page, limitation)
-            .stream().map(DataSetConvertor::DataSetEntity2DataSetInfo).toList();
+    public ListPage<DataSetInfo> getAllDataSetInfoByLimitation(int page, int limitation, Integer publisherId) {
+        log.info("[getAllDataSetInfoByLimitation]-全量查询数据库, page={}, limitation={}, publisherId={}", page, limitation, publisherId);
+        List<DataSetEntity> dataSetEntityList = dataSetMapper.selectAllWithLimitation((page-1) * limitation, limitation, publisherId);
+        log.info("[dataSetEntityList]-全量查询结果：{}", dataSetEntityList.toString());
+        List<DataSetInfo> res = dataSetEntityList.stream().map(DataSetConvertor::DataSetEntity2DataSetInfo).toList();
 
         // 总共多少条记录
         int size = dataSetMapper.selectCountAll();
-        int pages = (size % limitation) == 0 ? size / limitation : size / limitation + 1;
+        int raw_pages = size / limitation;
+        int pages = (size % limitation) == 0 ? raw_pages : raw_pages + 1;
         // 如果size=0，则总页数应该为1，而不应该是上面的算出的0
         if (size == 0) {
             pages = 1;

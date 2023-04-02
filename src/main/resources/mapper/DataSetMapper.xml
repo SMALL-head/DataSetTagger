@@ -12,8 +12,8 @@
         <result column="email" property="email"/>
     </resultMap>
     <insert id="insertDataSetEntity">
-        insert into dataset_tagger.data_set(pub_time, `desc`, sample_type, tag_type, gmt_create, publisher_id, dataset_id)
-        values (now(), #{desc}, #{sampleType}, #{tagType}, now(), #{publisherId}, #{datasetId});
+        insert into dataset_tagger.data_set(pub_time, `desc`, sample_type, tag_type, gmt_create, publisher_id, dataset_id, `name`)
+        values (now(), #{desc}, #{sampleType}, #{tagType}, now(), #{publisherId}, #{datasetId}, #{name});
     </insert>
 
     <select id="selectById" resultType="com.zyc.common.entity.DataSetEntity">
@@ -21,7 +21,15 @@
     </select>
 
     <select id="selectAllWithLimitation" resultType="com.zyc.common.entity.DataSetEntity">
-        select * from data_set limit #{page}, #{limitation}
+        select dataset_id, publisher_id, `desc`, pub_time, tag_type, sample_type
+        from data_set
+        <where>
+            <if test="publisherId != null">
+                publisher_id = #{publisherId}
+            </if>
+        </where>
+        limit #{offset}, #{limitation}
+
     </select>
     <select id="selectCountAll" resultType="java.lang.Integer">
         select count(*) from data_set;
