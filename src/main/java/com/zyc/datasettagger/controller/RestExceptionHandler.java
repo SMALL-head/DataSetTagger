@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RestExceptionHandler {
     @ExceptionHandler(BizException.class)
     public ResponseData<String> exception(BizException e) {
+        log.warn("[exception]-捕获到异常,e={}", e.getMessage());
         return ResponseData.generate(e.getReturnCode(), e.getMessage());
     }
 }

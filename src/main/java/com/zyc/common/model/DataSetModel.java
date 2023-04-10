@@ -9,10 +9,13 @@ import java.io.Serializable;
 public class DataSetModel implements Serializable {
     String _id;
     String publisher_id;
+    String publisher_name;
     String pub_time;
     String desc;
     String sample_type;
     String tag_type;
+
+    String name;
 
     public DataSetModel() {
     }
@@ -72,5 +75,21 @@ public class DataSetModel implements Serializable {
 
     public void setTag_type(String tag_type) {
         this.tag_type = tag_type;
+    }
+
+    public String getPublisher_name() {
+        return publisher_name;
+    }
+
+    public void setPublisher_name(String publisher_name) {
+        this.publisher_name = publisher_name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

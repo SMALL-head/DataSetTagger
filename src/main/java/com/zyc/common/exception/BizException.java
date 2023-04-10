@@ -6,7 +6,7 @@ import com.zyc.common.enums.ReturnCode;
  * @author zyc
  * @version 1.0
  */
-public class BizException extends Exception{
+public class BizException extends RuntimeException{
     ReturnCode returnCode;
     public BizException(String message, ReturnCode returnCode) {
         super(message);

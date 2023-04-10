@@ -1,21 +1,24 @@
 package com.zyc.datasettagger.config.security.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zyc.common.constants.Constants;
-import com.zyc.common.enums.ReturnCode;
-import com.zyc.common.security.entity.web.AuthenticateResponse;
+import com.zyc.common.constants.URIConstants;
+import com.zyc.datasettagger.config.security.filter.JSON2FormDataFilter;
 import com.zyc.datasettagger.config.security.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
@@ -27,14 +30,13 @@ public class SecurityConfiguration {
     public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
-
     @Bean
     public SecurityFilterChain filterChain1(HttpSecurity httpSecurity,
-                                            UserDetailsService userDetailsService,
                                             AccessDeniedHandler accessDeniedHandler,
                                             AuthenticationEntryPoint authenticationEntryPoint,
                                             LogoutSuccessHandler logoutSuccessHandler,
                                             SessionInformationExpiredStrategy sessionInformationExpiredStrategy,
+                                            UserDetailsService userDetailsService,
                                             AuthenticationSuccessHandler authenticationSuccessHandler,
                                             AuthenticationFailureHandler authenticationFailureHandler) throws Exception {
         return httpSecurity
@@ -43,12 +45,13 @@ public class SecurityConfiguration {
                 try {
                     registry
                         .requestMatchers("/api/user/register").permitAll()
-                        .requestMatchers("/api/user/login").permitAll()
+                        .requestMatchers(URIConstants.LOGIN_URI).permitAll()
                         .anyRequest().authenticated(); // 所有其他请求一律需要认证
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             })
+            .addFilterBefore(new JSON2FormDataFilter(), UsernamePasswordAuthenticationFilter.class)
             .formLogin()
             .loginProcessingUrl("/api/user/login").permitAll() // 前端action中的url，匹配后将会将登录认证信息传给bean认证
             .usernameParameter("username").passwordParameter("password")// 前端表单指定的值
@@ -80,6 +83,6 @@ public class SecurityConfiguration {
 
 //    @Bean
 //    public PasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder(10);
+//        return new BCryptPasswordEncoder();
 //    }
 }

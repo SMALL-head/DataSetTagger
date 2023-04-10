@@ -2,15 +2,20 @@ package com.zyc.datasettagger.service.impl;
 
 import com.zyc.common.data.DataSetInfo;
 import com.zyc.common.entity.DataSetEntity;
+import com.zyc.common.enums.ReturnCode;
+import com.zyc.common.exception.BizException;
 import com.zyc.common.model.ListPage;
 import com.zyc.datasettagger.mapper.DataSetMapper;
 import com.zyc.datasettagger.service.DataSetService;
 import com.zyc.datasettagger.service.UserService;
 import com.zyc.utils.Convertor;
 import com.zyc.utils.convertor.DataSetConvertor;
+import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -66,5 +71,31 @@ public class DataSetServiceImpl implements DataSetService {
             return null;
         }
         return DataSetConvertor.DataSetEntity2DataSetInfo(dataSetEntity);
+    }
+
+    @Override
+    public int updateDataset(DataSetInfo dataSetInfo) throws BizException {
+        if (dataSetInfo == null) {
+            log.warn("[updateDataset]-传入dataSetInfo为null");
+            return 0;
+        }
+
+        DataSetEntity dataSetEntity = dataSetMapper.selectByDatasetId(dataSetInfo.getDatasetId());
+        int publisherId = dataSetEntity.getPublisherId(); // publisherId为数据库中查询的owner
+        if (publisherId != dataSetInfo.getPublisherId()) {
+            log.warn("[updateDataset]-无权限修改数据集,请求者为{}, 数据集owner为{}", dataSetInfo.getPublisherId(), publisherId);
+            throw new BizException("无修改数据集权限", ReturnCode.RC403);
+        }
+        log.info("[updateDataset]-更新数据集, {}", dataSetInfo.printUpdateInfo());
+        return dataSetMapper.updateDataSetInfo(DataSetConvertor.dataSetInfo2Entity(dataSetInfo));
+    }
+
+    @Override
+    public int deleteDatasetById(String id) {
+        if (ObjectUtils.isEmpty(id)) {
+            log.warn("[deleteDatasetById]-非法id");
+            return 0;
+        }
+        return dataSetMapper.deleteDatasetById(id);
     }
 }

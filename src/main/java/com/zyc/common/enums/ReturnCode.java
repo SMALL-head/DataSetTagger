@@ -6,7 +6,9 @@ package com.zyc.common.enums;
  */
 public enum ReturnCode {
     RC200(200, "请求成功"),
+    INVALID_ID(400, "非法id"),
     RC403(403, "没有权限"),
+    DATA_NOT_FOUND(404, "未找到满足条件的数据"),
     INVALID_INPUT(405, "非法入参"),
 
     USER_NOT_FOUND(2004, "无法找到对应用户名"),

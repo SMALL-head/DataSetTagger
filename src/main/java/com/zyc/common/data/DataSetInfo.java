@@ -12,7 +12,6 @@ import java.sql.Timestamp;
  */
 public class DataSetInfo {
     int id;
-
     String datasetId;
     Timestamp pubTime;
     String desc;
@@ -22,6 +21,15 @@ public class DataSetInfo {
     String name;
 
     int publisherId;
+    String publisherName;
+
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
+    }
 
     public DataSetInfo() {
     }
@@ -111,5 +119,10 @@ public class DataSetInfo {
             ", sampleType=" + sampleType +
             ", name='" + name + '\'' +
             '}';
+    }
+
+    public String printUpdateInfo() {
+        return "{ datasetId=%s, sampleType=%s, tagType=%s, publisher_id=%s }"
+            .formatted(datasetId, sampleType.getName(), tagType.getName(), publisherId);
     }
 }

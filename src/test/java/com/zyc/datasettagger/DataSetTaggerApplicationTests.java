@@ -10,15 +10,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 @Slf4j
 class DataSetTaggerApplicationTests {
     @Autowired
-   UserMapper userMapper;
+    UserMapper userMapper;
 
     @Autowired
     DataSetMapper dataSetMapper;
+
 
     @Test
     void contextLoads() {
@@ -28,11 +30,6 @@ class DataSetTaggerApplicationTests {
     void test() {
         User p1 = userMapper.loadUserByUsername("p1");
         System.out.println(p1);
-    }
-
-    @Test
-    public void testDataSetMapper() throws EnumAcquireException {
-        log.info(DataSetConvertor.DataSetEntity2DataSetInfo(dataSetMapper.selectById(1) )+ "");
     }
 
 }

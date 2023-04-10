@@ -9,15 +9,14 @@ import java.sql.Timestamp;
 
 public class DataSetEntity {
     int id;
-
     String datasetId;
     Timestamp pubTime;
     String desc;
     String tagType;
     String sampleType;
     String name;
-
     int publisherId;
+    String publisherName;
 
     public String getDatasetId() {
         return datasetId;
@@ -102,6 +101,14 @@ public class DataSetEntity {
 
     public void setDataset_id(String datasetId) {
         this.datasetId = datasetId;
+    }
+
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
     }
 
     @Override
