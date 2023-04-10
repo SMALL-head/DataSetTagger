@@ -6,6 +6,7 @@ import com.zyc.common.enums.SampleTypeEnum;
 import com.zyc.common.enums.TagTypeEnum;
 import com.zyc.common.exception.EnumAcquireException;
 import com.zyc.common.security.entity.User;
+import com.zyc.common.security.entity.web.SimpleUserDataModel;
 import com.zyc.common.security.entity.web.UserDataModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -17,22 +18,10 @@ import org.springframework.beans.BeanUtils;
  */
 @Slf4j
 public class Convertor {
-    public static UserDataModel User2UserDataModel(User user) {
-        UserDataModel userDataModel = new UserDataModel();
+    public static SimpleUserDataModel User2SimpleUserDataModel(User user, boolean passwordDisplay) {
+        SimpleUserDataModel userDataModel = new SimpleUserDataModel();
         BeanUtils.copyProperties(user, userDataModel);
-        userDataModel.set_id(user.getId().toString());
-        return userDataModel;
-    }
 
-    public static DataSetInfo DataSetEntity2DataSetInfo(DataSetEntity entity) {
-        DataSetInfo res = new DataSetInfo();
-        BeanUtils.copyProperties(entity, res);
-        try {
-            res.setSampleType(SampleTypeEnum.getEnumByName(entity.getSampleType()));
-            res.setTagType(TagTypeEnum.getEnumByName(entity.getTagType()));
-        } catch (EnumAcquireException e) {
-            log.warn("[DataSetEntity2DataSetInfo] - {}", e.getMessage());
-        }
-        return res;
+        return userDataModel;
     }
 }

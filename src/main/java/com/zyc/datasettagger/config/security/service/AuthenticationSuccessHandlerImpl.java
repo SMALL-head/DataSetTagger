@@ -34,12 +34,12 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        User user = userMapper.loadUserByUsername(authentication.getName());
-        UserDataModel userDataModel = Convertor.User2UserDataModel(user);
-        // 设置response响应为json格式后，拿到response的PrintWriter，直接写入就好
+        User user = userMapper.loadUserByUsername(authentication.getName()); // 查找用户用户打日志
+
         response.setContentType(Constants.JSON_CONTENT_TYPE_UTF8);
-        AuthenticateResponse authenticateResponse = new AuthenticateResponse(200, "", userDataModel);
+        AuthenticateResponse authenticateResponse = new AuthenticateResponse(200, "登录成功", null);
         response.getWriter().println(new ObjectMapper().writeValueAsString(authenticateResponse));
+
         log.info("[onAuthenticationSuccess]-认证成功-username={}", user.getUsername());
     }
 }

@@ -11,16 +11,51 @@
         <result column="locked" property="locked"/>
         <result column="email" property="email"/>
     </resultMap>
-
-    <select id="selectById" resultType="com.zyc.common.entity.DataSetEntity">
-        select * from dataset_tagger.data_set where id = #{id};
-    </select>
+<!--    <resultMap id="datasetMap" type="com.zyc.common.entity.DataSetEntity">-->
+<!--        <id column="dataset_id" property="datasetId"/>-->
+<!--        <result column="sample_type" property="sampleType"/>-->
+<!--        <result column="tag_type" property="tagType"/>-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="desc" property="desc"/>-->
+<!--        <result column="id" property="id"/>-->
+<!--        <result column="pub_time" property="pubTime"/>-->
+<!--        <result column="publisher_id" property="publisherId"/>-->
+<!--    </resultMap>-->
+    <insert id="insertDataSetEntity">
+        insert into dataset_tagger.data_set(pub_time, `desc`, sample_type, tag_type, gmt_create, publisher_id,
+                                            dataset_id, `name`)
+        values (now(), #{desc}, #{sampleType}, #{tagType}, now(), #{publisherId}, #{datasetId}, #{name});
+    </insert>
+    <update id="updateDataSetInfo">
+        update dataset_tagger.data_set as t
+        set t.`desc`      = binary #{desc},
+            t.sample_type = binary #{sampleType},
+            t.tag_type    = binary #{tagType}
+        where t.dataset_id = binary #{datasetId}
+    </update>
+    <delete id="deleteDatasetById">
+        delete from dataset_tagger.data_set where dataset_id = #{id};
+    </delete>
 
     <select id="selectAllWithLimitation" resultType="com.zyc.common.entity.DataSetEntity">
-        select * from data_set limit #{page}, #{limitation}
+        select dataset_id, publisher_id, `desc`, pub_time, tag_type, sample_type
+        from data_set
+        <where>
+            <if test="publisherId != null">
+                publisher_id = #{publisherId}
+            </if>
+        </where>
+        limit #{offset}, #{limitation}
+
     </select>
     <select id="selectCountAll" resultType="java.lang.Integer">
-        select count(*) from data_set;
+        select count(*)
+        from data_set;
+    </select>
+    <select id="selectByDatasetId" resultType="com.zyc.common.entity.DataSetEntity">
+        select dataset_id, pub_time, publisher_id, pub_time, `desc`, sample_type, tag_type, u.username as publisher_name, `name`
+        from dataset_tagger.data_set as d, dataset_tagger.user as u
+        where dataset_id = #{dataSetId} and publisher_id = u.id;
     </select>
 
 </mapper>
