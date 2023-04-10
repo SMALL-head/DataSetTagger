@@ -42,8 +42,6 @@ public class ResponseAdvise implements ResponseBodyAdvice<Object> {
        if (body instanceof ResponseData) {
            return body;
        }
-        System.out.println(request.getHeaders().keySet());
-        System.out.println("body:" + body.toString());
        return ResponseData.success((Serializable) body);
     }
 }
