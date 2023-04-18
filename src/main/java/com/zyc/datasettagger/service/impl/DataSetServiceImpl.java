@@ -5,15 +5,13 @@ import com.zyc.common.entity.DataSetEntity;
 import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.model.ListPage;
+import com.zyc.common.security.entity.User;
+import com.zyc.datasettagger.config.security.mapper.UserMapper;
 import com.zyc.datasettagger.mapper.DataSetMapper;
 import com.zyc.datasettagger.service.DataSetService;
-import com.zyc.datasettagger.service.UserService;
-import com.zyc.utils.Convertor;
 import com.zyc.utils.convertor.DataSetConvertor;
-import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -29,6 +27,14 @@ import java.util.List;
 public class DataSetServiceImpl implements DataSetService {
     // todo： 尚未测试
     DataSetMapper dataSetMapper;
+
+    UserMapper userMapper;
+
+    @Autowired
+    public void setUserService(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     @Autowired
     public void setDataSetMapper(DataSetMapper dataSetMapper) {
         this.dataSetMapper = dataSetMapper;
@@ -70,7 +76,11 @@ public class DataSetServiceImpl implements DataSetService {
             log.warn("[getDataSetByDataSetId]-未找到dataSetId={}的数据集", dataSetId);
             return null;
         }
-        return DataSetConvertor.DataSetEntity2DataSetInfo(dataSetEntity);
+        User userById = userMapper.getUserById(dataSetEntity.getPublisherId());
+        DataSetInfo dataSetInfo = DataSetConvertor.DataSetEntity2DataSetInfo(dataSetEntity);
+        log.info("[getDataSetByDataSetId]-获取到user信息{}", userById);
+        dataSetInfo.setPublisherName(userById.getUsername());
+        return dataSetInfo;
     }
 
     @Override

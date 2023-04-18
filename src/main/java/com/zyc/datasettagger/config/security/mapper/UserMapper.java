@@ -24,4 +24,6 @@ public interface UserMapper {
 
     Integer getIdByUsername(String username);
 
+    User getUserById(Integer id);
+
 }

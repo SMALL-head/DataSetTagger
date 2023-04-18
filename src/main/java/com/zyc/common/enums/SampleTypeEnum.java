@@ -40,7 +40,7 @@ public enum SampleTypeEnum {
                 return s;
             }
         }
-        throw new EnumAcquireException("id = " + id + " 无法转换枚举变量[SampleTypeEnum]");
+        throw new EnumAcquireException("id = " + id + " 不是正确的类型");
     }
 
     public static SampleTypeEnum getEnumByName(String name) throws EnumAcquireException {
@@ -49,7 +49,7 @@ public enum SampleTypeEnum {
                 return s;
             }
         }
-        throw new EnumAcquireException("name = " + name + " 无法转换枚举变量[SampleTypeEnum]");
+        throw new EnumAcquireException("name = " + name + " 不是正确的类型");
     }
 
 

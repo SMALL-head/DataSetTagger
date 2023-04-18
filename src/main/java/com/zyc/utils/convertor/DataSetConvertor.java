@@ -23,6 +23,7 @@ public class DataSetConvertor {
         dataSetEntity.setSampleType(dataSetInfo.getSampleType().getName());
         dataSetEntity.setTagType(dataSetInfo.getTagType().getName());
         dataSetEntity.setDataset_id(dataSetInfo.getDatasetId());
+        dataSetEntity.setPublisherName(dataSetInfo.getPublisherName());
         return dataSetEntity;
     }
 

@@ -1,4 +1,4 @@
-package com.zyc.datasettagger.controller;
+package com.zyc.datasettagger.controller.component;
 
 import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.model.ResponseData;

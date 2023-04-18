@@ -40,6 +40,6 @@ public enum TagTypeEnum {
                 return s;
             }
         }
-        throw new EnumAcquireException("name = " + name + " 无法转换枚举变量[TagTypeEnum]");
+        throw new EnumAcquireException("name = " + name + " 不是正确的类型");
     }
 }

@@ -6,4 +6,6 @@ package com.zyc.common.constants;
  */
 public class URIConstants {
     public final static String LOGIN_URI = "/api/user/login";
+    public final static String LOGOUT_URI = "/api/user/logout";
+    public final static String REGISTER_URI = "/api/user/register";
 }

@@ -51,8 +51,14 @@ public class DataSetController {
         this.objectMapper = objectMapper;
     }
 
-    @PostMapping(value = "/api/dataset", produces = MediaType.APPLICATION_JSON_VALUE)
-    public DataSetModel addDataSet(String desc, @RequestParam("example_type") String sampleType, @RequestParam("tag_tpe") String tagType, @RequestParam String name) throws EnumAcquireException, BizException {
+    @PostMapping(value = "/api/dataset", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public DataSetModel addDataSet(@RequestBody DataSetModel param) throws EnumAcquireException, BizException {
+
+        String desc = param.getDesc();
+        String sampleType = param.getSample_type();
+        String tagType = param.getTag_type();
+        String name = param.getName();
+
         // 1. 封装datasetInfo
         DataSetInfo dataSetInfo = new DataSetInfo();
         if (ObjectUtils.isEmpty(desc) || ObjectUtils.isEmpty(sampleType) || ObjectUtils.isEmpty(tagType)) {
@@ -75,6 +81,7 @@ public class DataSetController {
         String datasetId = UUID.randomUUID().toString();
         dataSetInfo.setDatasetId(datasetId);
         dataSetInfo.setName(name);
+        dataSetInfo.setPublisherName(username);
 
         int i = dataSetService.insertDataSet(dataSetInfo);
 

@@ -17,4 +17,6 @@ public interface UserService {
      * @return 用户id
      */
     Integer getIdByUsername(String username);
+
+    User getUserByName(String name);
 }

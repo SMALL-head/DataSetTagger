@@ -44,7 +44,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(registry -> {
                 try {
                     registry
-                        .requestMatchers("/api/user/register").permitAll()
+                        .requestMatchers(URIConstants.REGISTER_URI).permitAll()
                         .requestMatchers(URIConstants.LOGIN_URI).permitAll()
                         .anyRequest().authenticated(); // 所有其他请求一律需要认证
                 } catch (Exception e) {
@@ -53,13 +53,13 @@ public class SecurityConfiguration {
             })
             .addFilterBefore(new JSON2FormDataFilter(), UsernamePasswordAuthenticationFilter.class)
             .formLogin()
-            .loginProcessingUrl("/api/user/login").permitAll() // 前端action中的url，匹配后将会将登录认证信息传给bean认证
+            .loginProcessingUrl(URIConstants.LOGIN_URI).permitAll() // 前端action中的url，匹配后将会将登录认证信息传给bean认证
             .usernameParameter("username").passwordParameter("password")// 前端表单指定的值
             .successHandler(authenticationSuccessHandler)
             .failureHandler(authenticationFailureHandler)
             .and()
             .logout() // 开启注销功能，默认是开启的，这里调用该方法只是为了获取其对象
-            .logoutUrl("/api/user/logout")
+            .logoutUrl(URIConstants.LOGOUT_URI)
             .permitAll()
             .invalidateHttpSession(true) // 默认是true，退出登录后推出session
             .clearAuthentication(true) // 默认是true，清除认证

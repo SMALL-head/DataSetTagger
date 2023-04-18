@@ -1,13 +1,17 @@
-package com.zyc.datasettagger.controller;
+package com.zyc.datasettagger.controller.component;
 
 import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.exception.BizException;
+import com.zyc.common.exception.EnumAcquireException;
 import com.zyc.common.model.ResponseData;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * 内部服务器代码运行时，如果有异常抛出到Controller层了，将会被这个Controller接住
@@ -21,8 +25,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class RestExceptionHandler {
     @ExceptionHandler(BizException.class)
-    public ResponseData<String> exception(BizException e) {
+    public ResponseData<String> bizException(BizException e) {
         log.warn("[exception]-捕获到异常,e={}", e.getMessage());
         return ResponseData.generate(e.getReturnCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseData<String> sqlConstraintException(SQLIntegrityConstraintViolationException e) {
+        log.warn("[sqlConstraintException]-捕获到异常, e.message={}, e.state={}", e.getMessage(), e.getSQLState());
+        return ResponseData.generate(ReturnCode.RC999, "");
+    }
+
+    @ExceptionHandler(EnumAcquireException.class)
+    public ResponseData<String> enumAcquireException(EnumAcquireException e) {
+        log.warn("[enumAcquireException]-捕获到异常, e.message={}", e.getMessage());
+        return ResponseData.generate(ReturnCode.RC999, e.getMessage());
     }
 }

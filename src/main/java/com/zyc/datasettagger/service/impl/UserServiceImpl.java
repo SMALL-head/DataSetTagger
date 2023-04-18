@@ -64,4 +64,13 @@ public class UserServiceImpl implements UserService {
         }
         return idByUsername;
     }
+
+    @Override
+    public User getUserByName(String name) {
+        if (ObjectUtils.isEmpty(name)) {
+            log.warn("[getUserByName]-name传参为{}", name);
+            return null;
+        }
+        return userMapper.loadUserByUsername(name);
+    }
 }

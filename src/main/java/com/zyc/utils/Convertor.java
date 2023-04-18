@@ -24,4 +24,12 @@ public class Convertor {
 
         return userDataModel;
     }
+
+    public static UserDataModel User2UserDataModel(User user) {
+        UserDataModel userDataModel = new UserDataModel();
+        userDataModel.setUsername(user.getUsername());
+        userDataModel.setEmail(user.getEmail());
+        userDataModel.setPhone(user.getPhone());
+        return  userDataModel;
+    }
 }
