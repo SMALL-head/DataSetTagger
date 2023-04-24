@@ -32,4 +32,6 @@ public interface DataSetService {
     int updateDataset(DataSetInfo dataSetInfo) throws BizException;
 
     int deleteDatasetById(String id);
+
+    int countAll();
 }

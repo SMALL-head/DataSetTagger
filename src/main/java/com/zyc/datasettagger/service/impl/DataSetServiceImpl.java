@@ -46,6 +46,7 @@ public class DataSetServiceImpl implements DataSetService {
         List<DataSetEntity> dataSetEntityList = dataSetMapper.selectAllWithLimitation((page-1) * limitation, limitation, publisherId);
         log.info("[dataSetEntityList]-全量查询结果：{}", dataSetEntityList.toString());
         List<DataSetInfo> res = dataSetEntityList.stream().map(DataSetConvertor::DataSetEntity2DataSetInfo).toList();
+        int total = dataSetMapper.selectCountAll();
 
         // 总共多少条记录
         int size = dataSetMapper.selectCountAll();
@@ -55,7 +56,7 @@ public class DataSetServiceImpl implements DataSetService {
         if (size == 0) {
             pages = 1;
         }
-        return new ListPage<>(page, pages, res, limitation);
+        return new ListPage<>(page, pages, res, limitation, total);
     }
 
     @Override
@@ -107,5 +108,10 @@ public class DataSetServiceImpl implements DataSetService {
             return 0;
         }
         return dataSetMapper.deleteDatasetById(id);
+    }
+
+    @Override
+    public int countAll() {
+        return dataSetMapper.selectCountAll();
     }
 }

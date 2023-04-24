@@ -2,5 +2,30 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyc.datasettagger.mapper.SampleMapper">
+    <insert id="addSample">
+        insert into dataset_tagger.sample
+            (dataset_id, content, sample_type, tag_type, sample_id)
+        values (#{datasetId}, #{content}, #{sampleType}, #{tagType}, #{sampleId})
+    </insert>
+    <delete id="deleteById">
+        delete from dataset_tagger.sample where sample_id = #{id}
+    </delete>
 
+    <select id="getSampleById" resultType="com.zyc.common.entity.SampleEntity">
+        select sample_id, dataset_id, content, tag_type, sample_type
+        from dataset_tagger.sample
+        where sample_id = #{id}
+    </select>
+    <select id="getSampleByDatasetId" resultType="com.zyc.common.entity.SampleEntity">
+        select dataset_id, tag_type, sample_id, sample_type, content from dataset_tagger.sample
+    </select>
+    <select id="getSampleByLimitation" resultType="com.zyc.common.entity.SampleEntity">
+        select dataset_id, content, sample_type, tag_type, sample_id
+        from dataset_tagger.sample
+        where dataset_id = #{datasetId}
+        limit #{cur}, #{limitation}
+    </select>
+    <select id="countAll" resultType="java.lang.Integer">
+        select count(*) from dataset_tagger.sample
+    </select>
 </mapper>

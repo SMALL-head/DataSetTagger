@@ -32,7 +32,7 @@ public class RegisterController {
 
     @PostMapping(value = "/api/user/register", produces = Constants.JSON_CONTENT_TYPE_UTF8)
     public SimpleUserDataModel taggerRegister(@RequestBody UsernamePassword usernamePassword) throws BizException {
-        // 1. 检查账号或密码是否为空，若为空直接跑出异常
+        // 1. 检查账号或密码是否为空，若为空直接出异常
         ParamChecker.checkUsernamePasswordNull(usernamePassword);
 
         String username = usernamePassword.getUsername();

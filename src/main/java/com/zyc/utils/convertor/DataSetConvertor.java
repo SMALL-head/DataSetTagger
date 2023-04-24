@@ -24,6 +24,7 @@ public class DataSetConvertor {
         dataSetEntity.setTagType(dataSetInfo.getTagType().getName());
         dataSetEntity.setDataset_id(dataSetInfo.getDatasetId());
         dataSetEntity.setPublisherName(dataSetInfo.getPublisherName());
+        dataSetEntity.setName(dataSetInfo.getName());
         return dataSetEntity;
     }
 
@@ -67,6 +68,7 @@ public class DataSetConvertor {
         }
         dataSetInfo.setTagType(TagTypeEnum.getEnumByName(dataSetModel.getTag_type()));
         dataSetInfo.setSampleType(SampleTypeEnum.getEnumByName(dataSetModel.getSample_type()));
+        dataSetInfo.setName(dataSetModel.getName());
         return  dataSetInfo;
     }
 }

@@ -4,7 +4,7 @@ spring:
     datasource:
         username: root
         password: zyc1666033672
-        url: jdbc:mysql://localhost:3306/dataset_tagger
+        url: jdbc:mysql://localhost:3306/dataset_tagger?useBinaryStream=true
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         druid:

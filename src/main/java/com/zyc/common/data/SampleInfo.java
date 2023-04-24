@@ -1,5 +1,8 @@
 package com.zyc.common.data;
 
+import com.zyc.common.enums.SampleTypeEnum;
+import com.zyc.common.enums.TagTypeEnum;
+
 /**
  * @author zyc
  * @version 1.0
@@ -9,13 +12,13 @@ public class SampleInfo {
 
     String content;
     String datasetId;
-    String sampleType;
-    String tagType;
+    SampleTypeEnum sampleType;
+    TagTypeEnum tagType;
 
     public SampleInfo() {
     }
 
-    public SampleInfo(String sampleId, String content, String datasetId, String sampleType, String tagType) {
+    public SampleInfo(String sampleId, String content, String datasetId, SampleTypeEnum sampleType, TagTypeEnum tagType) {
         this.sampleId = sampleId;
         this.content = content;
         this.datasetId = datasetId;
@@ -39,27 +42,28 @@ public class SampleInfo {
         this.content = content;
     }
 
-    public String getDataSetId() {
+
+    public String getDatasetId() {
         return datasetId;
     }
 
-    public void setDataSetId(String datasetId) {
+    public void setDatasetId(String datasetId) {
         this.datasetId = datasetId;
     }
 
-    public String getSampleType() {
+    public SampleTypeEnum getSampleType() {
         return sampleType;
     }
 
-    public void setSampleType(String sampleType) {
+    public void setSampleType(SampleTypeEnum sampleType) {
         this.sampleType = sampleType;
     }
 
-    public String getTagType() {
+    public TagTypeEnum getTagType() {
         return tagType;
     }
 
-    public void setTagType(String tagType) {
+    public void setTagType(TagTypeEnum tagType) {
         this.tagType = tagType;
     }
 }

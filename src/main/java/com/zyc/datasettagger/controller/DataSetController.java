@@ -10,6 +10,7 @@ import com.zyc.common.enums.TagTypeEnum;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.exception.EnumAcquireException;
 import com.zyc.common.model.DataSetModel;
+import com.zyc.common.model.DatasetListPage;
 import com.zyc.common.model.ListPage;
 import com.zyc.datasettagger.service.DataSetService;
 import com.zyc.datasettagger.service.UserService;
@@ -51,7 +52,7 @@ public class DataSetController {
         this.objectMapper = objectMapper;
     }
 
-    @PostMapping(value = "/api/dataset", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/api/dataset", produces = MediaType.APPLICATION_JSON_VALUE)
     public DataSetModel addDataSet(@RequestBody DataSetModel param) throws EnumAcquireException, BizException {
 
         String desc = param.getDesc();
@@ -94,7 +95,7 @@ public class DataSetController {
     }
 
     @RequestMapping(value = "/api/datasets", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ListPage<DataSetModel> getAllDataSet(Integer page_num, Integer page_size, Integer publisher_id) throws BizException {
+    public DatasetListPage getAllDataSet(Integer page_num, Integer page_size, Integer publisher_id) throws BizException {
         if (page_num == null || page_size == null) {
             log.warn("[getAllDataSet]-非法参数传入 - page_num = {}, page_size={}", page_num, page_size);
             throw new BizException("必须传入分页信息page_num和page_size", ReturnCode.INVALID_INPUT);
@@ -102,8 +103,9 @@ public class DataSetController {
 
         // 进行无差别全量查询，查询结果转化为DataSetModel
         ListPage<DataSetInfo> allDataSet = dataSetService.getAllDataSetInfoByLimitation(page_num, page_size, publisher_id);
+
         List<DataSetModel> collect = allDataSet.getPageContent().stream().map(DataSetConvertor::DataSetInfo2Model).toList();
-        return new ListPage<>(allDataSet.getCurPage(), allDataSet.getPageSize(), collect, allDataSet.getLimitation());
+        return new DatasetListPage(allDataSet.getCurPage(), allDataSet.getPageSize(), collect, allDataSet.getLimitation(), allDataSet.getTotal());
     }
 
 
@@ -146,6 +148,16 @@ public class DataSetController {
             throw new BizException("数据集id不能为空", ReturnCode.INVALID_ID);
         }
 
+        // 权限校验
+        String nameInContext = SecurityContextHolder.getContext().getAuthentication().getName();
+        DataSetInfo dataSetByDataSetId = dataSetService.getDataSetByDataSetId(id);
+        String publisherName = dataSetByDataSetId.getPublisherName();
+        if (!publisherName.equals(nameInContext)) {
+            log.warn("[deleteDataSetById]-数据集owner为{}， 操作者为{}", publisherName, nameInContext);
+            throw new BizException("无权限", ReturnCode.RC403);
+        }
+
+        // 删除操作
         int i = dataSetService.deleteDatasetById(id);
         if (i == 0) {
             log.info("[deleteDataSetById]-未找到指定待删除的数据集");

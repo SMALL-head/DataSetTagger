@@ -1,11 +1,13 @@
 package com.zyc.common.model;
 
+import java.io.Serializable;
+
 /**
  * 样本的前端模型
  * @author zyc
  * @version 1.0
  */
-public class SampleModel {
+public class SampleModel implements Serializable {
     String _id;
     String dataset_id;
     String content;

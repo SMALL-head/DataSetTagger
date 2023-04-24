@@ -30,6 +30,7 @@ public class Convertor {
         userDataModel.setUsername(user.getUsername());
         userDataModel.setEmail(user.getEmail());
         userDataModel.setPhone(user.getPhone());
+        userDataModel.set_id(user.getId()+"");
         return  userDataModel;
     }
 }
