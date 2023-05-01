@@ -33,9 +33,9 @@ public class JSON2FormDataFilter implements Filter {
             // 2.1 ParameterRequestWrapper是Request一个装饰器。
             // 为什么要使用装饰器？因为内置Request不提供set方法重新setParameter，那就只能重新装饰getter了
             ParameterRequestWrapper convertedRequest = new ParameterRequestWrapper(httpServletRequest);
-            String username = convertedRequest.getParameter("username");
-            String password = convertedRequest.getParameter("password");
-            String contentType1 = convertedRequest.getContentType();
+            String username = convertedRequest.getParameter("username");    // for debugging
+            String password = convertedRequest.getParameter("password");    // for debugging
+            String contentType1 = convertedRequest.getContentType();              // for debugging
             log.debug("[doFilter]- username = {}, pwd={}, ct={}", username, password, contentType1);
             filterChain.doFilter(convertedRequest, response);
         } else {

@@ -23,6 +23,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class SampleController {
         }
     }
 
-    @GetMapping("/api/sample/{id}")
+    @GetMapping(value = "/api/sample/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public SampleModel getSampleById(@PathVariable String id) {
         if (ObjectUtils.isEmpty(id)) {
             log.warn("[getSampleById]-传入参数id为空");
@@ -100,7 +101,7 @@ public class SampleController {
         return SampleConvertor.data2Model(sampleById);
     }
 
-    @RequestMapping(value = "/api/sample/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/sample/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteSampleById(@PathVariable String id) {
         if (ObjectUtils.isEmpty(id)) {
             log.warn("[deleteSampleById]-传入参数id为空");
