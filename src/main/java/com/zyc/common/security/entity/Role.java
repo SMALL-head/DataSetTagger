@@ -1,11 +1,14 @@
 package com.zyc.common.security.entity;
 
+import java.io.Serializable;
+import java.security.SecureRandomParameters;
+
 /**
  * 后端模型：角色权限
  * @author zyc
  * @version 1.0
  */
-public class Role {
+public class Role implements Serializable {
     Integer id;
     String name;
     String nameZh;

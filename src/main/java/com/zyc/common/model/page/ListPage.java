@@ -1,4 +1,4 @@
-package com.zyc.common.model;
+package com.zyc.common.model.page;
 
 import lombok.AllArgsConstructor;
 

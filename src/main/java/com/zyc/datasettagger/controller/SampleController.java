@@ -2,29 +2,23 @@ package com.zyc.datasettagger.controller;
 
 import com.zyc.common.data.DataSetInfo;
 import com.zyc.common.data.SampleInfo;
-import com.zyc.common.entity.SampleEntity;
 import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.exception.EnumAcquireException;
-import com.zyc.common.model.ListPage;
-import com.zyc.common.model.SampleListPage;
+import com.zyc.common.model.page.ListPage;
+import com.zyc.common.model.page.SampleListPage;
 import com.zyc.common.model.SampleModel;
 import com.zyc.datasettagger.service.DataSetService;
 import com.zyc.datasettagger.service.SampleService;
-import com.zyc.utils.Convertor;
 import com.zyc.utils.ParamChecker;
 import com.zyc.utils.convertor.SampleConvertor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
-import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +63,7 @@ public class SampleController {
     @GetMapping(value = "/api/samples", produces = MediaType.APPLICATION_JSON_VALUE)
     public SampleListPage getAllSample(@RequestParam("page_num") Integer pageNum,
                                        @RequestParam("page_size") Integer limitation,
-                                       @RequestParam("dataset_id") String dataset_id) {
+                                       @RequestParam(value = "dataset_id", required = false) String dataset_id) {
         if (pageNum == null || limitation == null) {
             log.error("[getAllSample]-getAllSample请求参数有误，pageNum和limitation不能为null");
             throw new BizException("参数错误", ReturnCode.INVALID_INPUT);

@@ -1,3 +1,8 @@
+# 项目安装和运行
+- 本项目是在使用jdk17版本下编写的，最好装有jdk17的java版本。同时需要有maven，mysql8.0以上版本
+- 相关db的安装请运行`db_install.sql`
+- `mvn spring-boot:run`运行项目，初次使用该命令会从maven中央仓库拉取依赖，需要一阵子。运行前检查8082端口没有被占用
+
 # 一、用户登录
 ## 1.1 登录
 请求：(POST)/api/user/login

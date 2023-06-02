@@ -2,7 +2,7 @@ package com.zyc.datasettagger.service;
 
 import com.zyc.common.data.SampleInfo;
 import com.zyc.common.entity.SampleEntity;
-import com.zyc.common.model.ListPage;
+import com.zyc.common.model.page.ListPage;
 
 import java.util.List;
 

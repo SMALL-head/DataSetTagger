@@ -10,8 +10,8 @@ import com.zyc.common.enums.TagTypeEnum;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.exception.EnumAcquireException;
 import com.zyc.common.model.DataSetModel;
-import com.zyc.common.model.DatasetListPage;
-import com.zyc.common.model.ListPage;
+import com.zyc.common.model.page.DatasetListPage;
+import com.zyc.common.model.page.ListPage;
 import com.zyc.datasettagger.service.DataSetService;
 import com.zyc.datasettagger.service.UserService;
 import com.zyc.utils.convertor.DataSetConvertor;
@@ -103,8 +103,8 @@ public class DataSetController {
 
         // 进行无差别全量查询，查询结果转化为DataSetModel
         ListPage<DataSetInfo> allDataSet = dataSetService.getAllDataSetInfoByLimitation(page_num, page_size, publisher_id);
-
-        List<DataSetModel> collect = allDataSet.getPageContent().stream().map(DataSetConvertor::DataSetInfo2Model).toList();
+        List<DataSetInfo> pageContent = allDataSet.getPageContent();
+        List<DataSetModel> collect = pageContent.stream().map(DataSetConvertor::DataSetInfo2Model).toList();
         return new DatasetListPage(allDataSet.getCurPage(), allDataSet.getPageSize(), collect, allDataSet.getLimitation(), allDataSet.getTotal());
     }
 

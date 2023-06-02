@@ -21,6 +21,11 @@ spring:
     jackson:
         serialization:
             FAIL_ON_EMPTY_BEANS: false
+    data:
+        redis:
+            host: 127.0.0.1
+            port: 6400
+
 mybatis:
     mapper-locations: classpath*:/mapper/*.xml
     configuration:

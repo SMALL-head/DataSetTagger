@@ -2,7 +2,7 @@ package com.zyc.datasettagger.service;
 
 import com.zyc.common.data.DataSetInfo;
 import com.zyc.common.exception.BizException;
-import com.zyc.common.model.ListPage;
+import com.zyc.common.model.page.ListPage;
 import jakarta.annotation.Nullable;
 
 /**

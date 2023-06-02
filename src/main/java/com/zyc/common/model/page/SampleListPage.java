@@ -1,5 +1,6 @@
-package com.zyc.common.model;
+package com.zyc.common.model.page;
 
+import com.zyc.common.model.SampleModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

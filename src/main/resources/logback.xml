@@ -5,7 +5,7 @@
     <!-- 控制台输出日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SS} [%thread] %green(%-5level) %blue(%logger{36}) - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SS} [%thread] %highlight(%-5level) %green(%logger{36}) - %msg%n</pattern>
         </layout>
     </appender>
 

@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyc.datasettagger.mapper.TagMapper">
+    <insert id="addTag">
+        insert into dataset_tagger.tag(tag_id, sample_id, tagger_id, tag_time, begin_pos, end_pos, tag)
+        values(#{tagId}, #{sampleId}, #{taggerId}, #{tagTime}, #{beginPos}, #{endPos}, #{tag})
+    </insert>
+    <delete id="deleteTagById">
+        delete from dataset_tagger.tag where tag_id = #{id}
+    </delete>
+    <select id="getTagByLimitation" resultType="com.zyc.common.entity.TagEntity">
+        select id, tag_id, sample_id, tagger_id, tag_time, begin_pos, end_pos, tag
+        from dataset_tagger.tag
+        where sample_id in (select sample_id from dataset_tagger.data_set where dataset_id = #{datasetId})
+        limit #{offset}, #{limitation}
+    </select>
+    <select id="countAll" resultType="java.lang.Integer">
+        select count(*) from dataset_tagger.tag
+    </select>
+    <select id="countAllByDatasetId" resultType="java.lang.Integer">
+        select count(*) from dataset_tagger.tag
+        where sample_id in (select sample_id from dataset_tagger.data_set where dataset_id = #{datasetId})
+    </select>
+</mapper>
