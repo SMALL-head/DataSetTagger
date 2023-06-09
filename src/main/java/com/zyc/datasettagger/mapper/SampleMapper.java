@@ -19,4 +19,5 @@ public interface SampleMapper {
     List<SampleEntity> getSampleByLimitation(String datasetId, int cur, int limitation);
     int countAll();
     int deleteById(String id);
+    int countSampleByDatasetId(String datasetId);
 }

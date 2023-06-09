@@ -17,6 +17,15 @@ public class DataSetEntity {
     String name;
     int publisherId;
     String publisherName;
+    String relation;
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 
     public String getDatasetId() {
         return datasetId;
@@ -114,9 +123,12 @@ public class DataSetEntity {
     @Override
     public String toString() {
         return "DataSetEntity{" +
-            "id=" + id +
-            ", datasetId='" + datasetId + '\'' +
+            "datasetId='" + datasetId + '\'' +
+            ", desc='" + desc + '\'' +
+            ", name='" + name + '\'' +
             ", publisherId=" + publisherId +
+            ", publisherName='" + publisherName + '\'' +
+            ", relation='" + relation + '\'' +
             '}';
     }
 }

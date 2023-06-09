@@ -6,6 +6,7 @@ import com.zyc.common.enums.ReturnCode;
 import com.zyc.common.exception.BizException;
 import com.zyc.common.exception.ConvertException;
 import com.zyc.common.model.page.ListPage;
+import com.zyc.datasettagger.mapper.SampleMapper;
 import com.zyc.datasettagger.mapper.TagMapper;
 import com.zyc.datasettagger.service.TagService;
 import com.zyc.utils.convertor.TagConvertor;
@@ -24,10 +25,16 @@ import java.util.List;
 @Slf4j
 public class TagServiceImpl implements TagService {
     TagMapper tagMapper;
+    SampleMapper sampleMapper;
 
     @Autowired
     public void setTagMapper(TagMapper tagMapper) {
         this.tagMapper = tagMapper;
+    }
+
+    @Autowired
+    public void setSampleMapper(SampleMapper sampleMapper) {
+        this.sampleMapper = sampleMapper;
     }
 
     @Override
@@ -45,7 +52,8 @@ public class TagServiceImpl implements TagService {
     @Override
     public ListPage<TagInfo> getTagByPagination(String datasetId, int curPage, int limitation) {
         List<TagInfo> list = tagMapper.getTagByLimitation(datasetId, (curPage - 1) * limitation, limitation).stream().map(TagConvertor::entity2Info).toList();
-        int size = tagMapper.countAll();
+//        int size = tagMapper.countAll();
+        int size = sampleMapper.countSampleByDatasetId(datasetId);
         return new ListPage<>(curPage, limitation, size, list);
     }
 

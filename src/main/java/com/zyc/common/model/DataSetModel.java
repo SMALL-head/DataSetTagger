@@ -16,6 +16,15 @@ public class DataSetModel implements Serializable {
     String tag_type;
 
     String name;
+    String relation;
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 
     public DataSetModel() {
     }

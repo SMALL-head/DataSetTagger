@@ -72,6 +72,7 @@ public class TagConvertor {
         tagInfo.setBeginPos(splitByColon(tagEntity.getBeginPos()));
         tagInfo.setEndPos(splitByColon(tagEntity.getEndPos()));
         tagInfo.setTag(splitByColon(tagEntity.getTag()));
+        tagInfo.setTaggerName(tagEntity.getUsername());
         return tagInfo;
     }
 
@@ -116,6 +117,7 @@ public class TagConvertor {
         tagModel.setEnd_pos(tagInfo.getEndPos());
         tagModel.setTag(tagInfo.getTag());
         tagModel.setTag_time(tagInfo.getTagTime().toString());
+        tagModel.setTagger_name(tagInfo.getTaggerName());
         return tagModel;
     }
 }

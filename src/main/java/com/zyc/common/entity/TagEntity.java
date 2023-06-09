@@ -18,6 +18,15 @@ public class TagEntity {
     String beginPos;
     String endPos;
     String tag;
+    String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getTagId() {
         return tagId;
@@ -74,5 +83,19 @@ public class TagEntity {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    @Override
+    public String toString() {
+        return "TagEntity{" +
+            "tagId='" + tagId + '\'' +
+            ", sampleId='" + sampleId + '\'' +
+            ", taggerId='" + taggerId + '\'' +
+            ", tagTime=" + tagTime +
+            ", beginPos='" + beginPos + '\'' +
+            ", endPos='" + endPos + '\'' +
+            ", tag='" + tag + '\'' +
+            ", username='" + username + '\'' +
+            '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.zyc.datasettagger;
 
+import com.zyc.common.entity.DataSetEntity;
 import com.zyc.common.entity.TagEntity;
 import com.zyc.common.exception.EnumAcquireException;
 import com.zyc.common.security.entity.User;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -54,14 +56,13 @@ class DataSetTaggerApplicationTests {
 
     @Test
     void test_tagMapper() {
-        TagEntity tagEntity = new TagEntity();
-        tagEntity.setTagId(UUID.randomUUID().toString());
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        tagEntity.setTagTime(timestamp);
-        tagEntity.setBeginPos("time : 1356s");
-        tagEntity.setEndPos("time : 1358s");
-        tagEntity.setTag("text : 一段文本标记");
-        tagMapper.addTag(tagEntity);
+        List<TagEntity> tagByLimitation = tagMapper.getTagByLimitation("60e6ac4f-f859-4bf7-8bca-78eb670d6c9e", 0, 5);
+        System.out.println(tagByLimitation);
+    }
+
+    @Test
+    void test_dataset_search() {
+
     }
 
 }

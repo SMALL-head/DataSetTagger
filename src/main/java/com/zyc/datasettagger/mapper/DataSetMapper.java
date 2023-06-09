@@ -24,4 +24,6 @@ public interface DataSetMapper {
     int updateDataSetInfo(DataSetEntity dataSetInfo);
 
     int deleteDatasetById(String id);
+    List<DataSetEntity> selectAuthWithLimitation(Integer offset, Integer limitation, Integer userId);
+    int getAmountWithAuth(Integer userId);
 }

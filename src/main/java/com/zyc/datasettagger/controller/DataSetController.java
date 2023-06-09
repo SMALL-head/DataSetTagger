@@ -108,6 +108,25 @@ public class DataSetController {
         return new DatasetListPage(allDataSet.getCurPage(), allDataSet.getPageSize(), collect, allDataSet.getLimitation(), allDataSet.getTotal());
     }
 
+    @RequestMapping(value = "/api/authorized_datasets", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public DatasetListPage getDatasetAuthorized(Integer page_num, Integer page_size) {
+        if (page_num == null ) {
+            page_num = 1;
+        }
+        if (page_size == null) {
+            page_size = 10;
+        }
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer idByUsername = userService.getIdByUsername(name);
+        ListPage<DataSetInfo> dataSetInfoList = dataSetService.getDataSetInfoByAuthority(page_num, page_size, idByUsername);
+
+        // 查询全量共有多少条
+        int total = dataSetService.countAllByAuth(idByUsername);
+        List<DataSetInfo> pageContent = dataSetInfoList.getPageContent();
+        List<DataSetModel> list = pageContent.stream().map(DataSetConvertor::DataSetInfo2Model).toList();
+        return new DatasetListPage(dataSetInfoList.getCurPage(), dataSetInfoList.getPageSize(), list, dataSetInfoList.getLimitation(), total);
+    }
+
 
     @RequestMapping(value = "/api/dataset/{id}", method = RequestMethod.PUT)
     public DataSetModel updateDataset(@PathVariable("id") String id, @RequestBody DataSetModel dataSetModel) throws JsonProcessingException {
@@ -151,6 +170,10 @@ public class DataSetController {
         // 权限校验
         String nameInContext = SecurityContextHolder.getContext().getAuthentication().getName();
         DataSetInfo dataSetByDataSetId = dataSetService.getDataSetByDataSetId(id);
+        if (dataSetByDataSetId == null) {
+            log.warn("[deleteDataSetById]-没有找到datasetId={}的数据集", id);
+            throw new BizException("没有找到对应的数据集", ReturnCode.RC999);
+        }
         String publisherName = dataSetByDataSetId.getPublisherName();
         if (!publisherName.equals(nameInContext)) {
             log.warn("[deleteDataSetById]-数据集owner为{}， 操作者为{}", publisherName, nameInContext);

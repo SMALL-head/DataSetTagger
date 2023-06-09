@@ -22,6 +22,15 @@ public class DataSetInfo {
 
     int publisherId;
     String publisherName;
+    String relation;
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 
     public String getPublisherName() {
         return publisherName;

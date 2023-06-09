@@ -15,6 +15,15 @@ public class TagModel implements Serializable {
     Map<String, String> begin_pos;
     Map<String, String> end_pos;
     Map<String, String> tag;
+    String tagger_name;
+
+    public String getTagger_name() {
+        return tagger_name;
+    }
+
+    public void setTagger_name(String tagger_name) {
+        this.tagger_name = tagger_name;
+    }
 
     public String get_id() {
         return _id;

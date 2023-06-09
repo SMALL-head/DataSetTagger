@@ -42,6 +42,10 @@ public class DataSetServiceImpl implements DataSetService {
     @Override
     public ListPage<DataSetInfo> getAllDataSetInfoByLimitation(int page, int limitation, Integer publisherId) {
         log.info("[getAllDataSetInfoByLimitation]-全量查询数据库, page={}, limitation={}, publisherId={}", page, limitation, publisherId);
+        if (page <= 0) {
+            log.warn("[getDataSetInfoByAuthority]-page不正确，传入的page={}", page);
+            throw new BizException("page必须大于0", ReturnCode.INVALID_INPUT);
+        }
         List<DataSetEntity> dataSetEntityList = dataSetMapper.selectAllWithLimitation((page-1) * limitation, limitation, publisherId);
         log.info("[dataSetEntityList]-全量查询结果：{}", dataSetEntityList.toString());
         List<DataSetInfo> res = dataSetEntityList.stream().map(DataSetConvertor::DataSetEntity2DataSetInfo).toList();
@@ -54,6 +58,30 @@ public class DataSetServiceImpl implements DataSetService {
             pages = 1;
         }
         return new ListPage<>(page, pages, res, limitation, size);
+    }
+
+    @Override
+    public ListPage<DataSetInfo> getDataSetInfoByAuthority(int page, int limitation, Integer userId) {
+        log.info("[getDataSetInfoByAuthority]-按照权限查找数据集, publisherId={}", userId);
+        if (userId == null) {
+            log.warn("[getDataSetInfoByAuthority]-publisherId在此情况下不能为空");
+            throw new BizException("userId不能为空", ReturnCode.RC999);
+        }
+        if (page <= 0) {
+            log.warn("[getDataSetInfoByAuthority]-page不正确，传入的page={}", page);
+            throw new BizException("page必须大于0", ReturnCode.INVALID_INPUT);
+        }
+        List<DataSetEntity> dataSetEntityList = dataSetMapper.selectAuthWithLimitation((page - 1) * limitation, limitation, userId);
+        List<DataSetInfo> res = dataSetEntityList.stream().map(DataSetConvertor::DataSetEntity2DataSetInfo).toList();
+        int size = dataSetMapper.selectCountAll();
+        int raw_pages = size / limitation;
+        int pages = (size % limitation) == 0 ? raw_pages : raw_pages + 1;
+        // 如果size=0，则总页数应该为1，而不应该是上面的算出的0
+        if (size == 0) {
+            pages = 1;
+        }
+        return new ListPage<>(page, pages, res, limitation, size);
+
     }
 
     @Override
@@ -110,5 +138,13 @@ public class DataSetServiceImpl implements DataSetService {
     @Override
     public int countAll() {
         return dataSetMapper.selectCountAll();
+    }
+
+    @Override
+    public int countAllByAuth(Integer userId) {
+        if (userId == null) {
+            throw new BizException("[countAllByAuth]-userId为空", ReturnCode.INVALID_INPUT);
+        }
+        return dataSetMapper.getAmountWithAuth(userId);
     }
 }

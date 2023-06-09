@@ -73,7 +73,7 @@ public class SampleServiceImpl implements SampleService {
 
         List<SampleEntity> sampleList = sampleMapper.getSampleByLimitation(datasetId, (curPage - 1) * limitation, limitation);
         List<SampleInfo> res = sampleList.stream().map(SampleConvertor::entity2Info).toList();
-        int size = sampleMapper.countAll();
+        int size = sampleMapper.countSampleByDatasetId(datasetId);
         return new ListPage<>(curPage, limitation, size, res);
     }
 

@@ -25,6 +25,7 @@ public class DataSetConvertor {
         dataSetEntity.setDataset_id(dataSetInfo.getDatasetId());
         dataSetEntity.setPublisherName(dataSetInfo.getPublisherName());
         dataSetEntity.setName(dataSetInfo.getName());
+        dataSetEntity.setRelation(dataSetInfo.getRelation());
         return dataSetEntity;
     }
 
@@ -50,6 +51,7 @@ public class DataSetConvertor {
         dataSetModel.setTag_type(dataSetInfo.getTagType().getName());
         dataSetModel.setPublisher_name(dataSetInfo.getPublisherName());
         dataSetModel.setName(dataSetInfo.getName());
+        dataSetModel.setRelation(dataSetInfo.getRelation());
         return dataSetModel;
     }
 
@@ -69,6 +71,7 @@ public class DataSetConvertor {
         dataSetInfo.setTagType(TagTypeEnum.getEnumByName(dataSetModel.getTag_type()));
         dataSetInfo.setSampleType(SampleTypeEnum.getEnumByName(dataSetModel.getSample_type()));
         dataSetInfo.setName(dataSetModel.getName());
+        dataSetInfo.setRelation(dataSetModel.getRelation());
         return  dataSetInfo;
     }
 }

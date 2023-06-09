@@ -21,7 +21,7 @@ public class Convertor {
     public static SimpleUserDataModel User2SimpleUserDataModel(User user, boolean passwordDisplay) {
         SimpleUserDataModel userDataModel = new SimpleUserDataModel();
         BeanUtils.copyProperties(user, userDataModel);
-
+        userDataModel.setUid(String.valueOf(user.getId()));
         return userDataModel;
     }
 
@@ -30,7 +30,7 @@ public class Convertor {
         userDataModel.setUsername(user.getUsername());
         userDataModel.setEmail(user.getEmail());
         userDataModel.setPhone(user.getPhone());
-        userDataModel.set_id(user.getId()+"");
+        userDataModel.set_id(String.valueOf(user.getId()));
         return  userDataModel;
     }
 }

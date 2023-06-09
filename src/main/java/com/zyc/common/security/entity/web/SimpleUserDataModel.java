@@ -10,6 +10,8 @@ import java.io.Serializable;
 public class SimpleUserDataModel implements Serializable {
     String username;
 
+    String uid;
+
     public SimpleUserDataModel() {
     }
 
@@ -23,5 +25,13 @@ public class SimpleUserDataModel implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

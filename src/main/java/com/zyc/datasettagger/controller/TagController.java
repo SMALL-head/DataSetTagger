@@ -58,7 +58,7 @@ public class TagController {
         return TagConvertor.createFromInfo(tagInfo);
     }
 
-    @GetMapping("/api/tag")
+    @GetMapping("/api/tags")
     TagListPage getTagByPagination(@RequestParam Integer page_num,
                                    @RequestParam Integer page_size,
                                    @RequestParam(required = false) String dataset_id) {
@@ -69,6 +69,7 @@ public class TagController {
         }
         ListPage<TagInfo> tagByPagination = tagService.getTagByPagination(dataset_id, page_num, page_size);
         int total = tagService.countAll(dataset_id);
+        log.info("[getTagByPagination]-查询dataset_id={}, 一共有total个tag={}", dataset_id, total);
         TagListPage tagListPage = new TagListPage();
         tagListPage.setTags(tagByPagination.getPageContent().stream().map(TagConvertor::createFromInfo).toList());
         tagListPage.setTotal(total);
@@ -78,7 +79,7 @@ public class TagController {
         return tagListPage;
     }
 
-    @RequestMapping("/api/tag/{id}")
+    @RequestMapping(value = "/api/tag/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     String deleteTagById(@PathVariable String id) {
         if (ObjectUtils.isEmpty(id)) {
             log.error("[deleteTagById]-id为空");

@@ -13,6 +13,7 @@ public class TagInfo {
     String tagId;
     String sampleId;
     String taggerId;
+    String taggerName;
     Timestamp tagTime;
     Map<String, String> beginPos;
     Map<String, String> endPos;
@@ -72,5 +73,13 @@ public class TagInfo {
 
     public void setTag(Map<String, String> tag) {
         this.tag = tag;
+    }
+
+    public String getTaggerName() {
+        return taggerName;
+    }
+
+    public void setTaggerName(String taggerName) {
+        this.taggerName = taggerName;
     }
 }

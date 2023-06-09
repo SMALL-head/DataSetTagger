@@ -17,7 +17,8 @@ public interface DataSetService {
      * @param publisherId 发布者id，可以传入null
      * @return 返回全量查询的结果
      */
-    ListPage<DataSetInfo> getAllDataSetInfoByLimitation(int page, int limitation, @Nullable Integer publisherId);
+    ListPage<DataSetInfo> getAllDataSetInfoByLimitation(int page, int limitation, Integer publisherId);
+    ListPage<DataSetInfo> getDataSetInfoByAuthority(int page, int limitation, Integer publisherId);
 
     int insertDataSet(DataSetInfo dataSetInfo);
 
@@ -34,4 +35,6 @@ public interface DataSetService {
     int deleteDatasetById(String id);
 
     int countAll();
+
+    int countAllByAuth(Integer userId);
 }
